@@ -1,0 +1,79 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { Icon } from "astro-icon/components";
+import { tv } from "tailwind-variants";
+
+import { Separator } from "@/components/starwind/separator";
+
+interface Props extends HTMLAttributes<"footer"> {
+  /** Company name for legal copy and copyright */
+  companyName?: string;
+}
+
+const footerStyles = tv({
+  base: "border-t bg-background",
+});
+
+const { companyName = "CENAPE Argentina", class: className, ...rest } = Astro.props;
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class={footerStyles({ class: className })} {...rest}>
+  <div class="mx-auto max-w-7xl px-5 py-14 lg:px-8">
+    <div class="grid gap-12 lg:grid-cols-[1.5fr_1fr_1fr] lg:gap-8">
+      <div class="flex flex-col gap-4">
+        <a href="/" class="inline-flex items-center gap-3" aria-label="CENAPE Argentina, inicio">
+          <Icon name="Logo-azul" class="text-5xl" />
+        </a>
+        <div>
+          <p class="font-heading text-lg font-semibold">{companyName}</p>
+          <p class="font-heading text-sm font-semibold tracking-wide text-primary-accent">
+            Estudia. Vive. Conecta. Crece.
+          </p>
+        </div>
+        <p class="max-w-sm text-sm leading-6 text-muted-foreground">
+          Una comunidad creada para estudiantes que quieren construir su futuro en Argentina.
+        </p>
+      </div>
+
+      <nav class="flex flex-col gap-3" aria-label="Enlaces del sitio">
+        <h3 class="mb-1 text-xs font-semibold tracking-widest text-muted-foreground uppercase">
+          Explorar
+        </h3>
+        <a href="#diferencia" class="text-sm text-muted-foreground transition-colors hover:text-foreground">
+          Qué nos diferencia
+        </a>
+        <a href="#residencias" class="text-sm text-muted-foreground transition-colors hover:text-foreground">
+          Residencias
+        </a>
+        <a href="#orientacion" class="text-sm text-muted-foreground transition-colors hover:text-foreground">
+          Orientación
+        </a>
+        <a href="#reserva" class="text-sm text-muted-foreground transition-colors hover:text-foreground">
+          Agenda tu sesión
+        </a>
+      </nav>
+
+      <nav class="flex flex-col gap-3" aria-label="Enlaces legales">
+        <h3 class="mb-1 text-xs font-semibold tracking-widest text-muted-foreground uppercase">
+          Legal
+        </h3>
+        <a href="#" class="text-sm text-muted-foreground transition-colors hover:text-foreground">
+          Privacidad
+        </a>
+        <a href="#" class="text-sm text-muted-foreground transition-colors hover:text-foreground">
+          Términos
+        </a>
+      </nav>
+    </div>
+
+    <Separator class="mt-12" />
+    <div class="mt-8 flex flex-col items-center justify-between gap-4 text-sm text-muted-foreground sm:flex-row">
+      <p>
+        © {currentYear} {companyName}. Todos los derechos reservados.
+      </p>
+      <p class="text-xs">Estudia. Vive. Conecta. Crece.</p>
+    </div>
+  </div>
+</footer>

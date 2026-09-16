@@ -1,0 +1,66 @@
+---
+import IconHeart from "@tabler/icons/outline/heart-handshake.svg";
+
+import { Badge } from "@/components/starwind/badge";
+import { Card, CardContent } from "@/components/starwind/card";
+
+const topics = [
+  "Cómo funciona el programa.",
+  "Dónde vivirá el estudiante.",
+  "Cómo será el proceso de llegada.",
+  "Qué opciones universitarias existen.",
+  "Qué inversión debe considerar la familia.",
+  "Cómo CENAPE acompaña al estudiante.",
+];
+---
+
+<section id="padres" class="scroll-mt-24 py-20 sm:py-24">
+  <div class="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:gap-16 lg:px-8">
+    <div>
+      <Badge tone="primary-accent" appearance="outline" eyebrow size="sm" class="mb-5">
+        La familia también cuenta
+      </Badge>
+      <h2 class="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+        ¿Tus padres participan en la decisión?
+      </h2>
+      <p class="mt-5 text-lg leading-8 text-muted-foreground">
+        También pueden acompañarte en la orientación. Sabemos que estudiar en otro país es una
+        decisión importante para toda la familia. Por eso, si tus padres o representantes participan
+        en la decisión, pueden acompañarte durante la sesión.
+      </p>
+      <p class="mt-4 leading-7 text-muted-foreground">
+        Queremos que tú tengas una oportunidad y que tu familia tenga tranquilidad.
+      </p>
+    </div>
+
+    <Card class="rounded-2xl border-primary/30 bg-primary text-primary-foreground shadow-xl">
+      <CardContent class="flex flex-col gap-6 px-6 py-8 sm:px-8">
+        <Badge tone="primary-accent" appearance="soft" eyebrow size="sm" class="w-fit">
+          <IconHeart class="size-4" />
+          Acompañamiento familiar
+        </Badge>
+        <p class="font-heading text-lg font-semibold">
+          Tus padres podrán conocer directamente:
+        </p>
+        <ul class="grid gap-4">
+          {
+            topics.map((topic) => (
+              <li class="flex items-start gap-3">
+                <svg
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  class="mt-1 size-4 shrink-0 text-primary-accent"
+                >
+                  <path d="m4 10 4 4 8-8" />
+                </svg>
+                <span class="leading-6 text-primary-foreground/90">{topic}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </CardContent>
+    </Card>
+  </div>
+</section>

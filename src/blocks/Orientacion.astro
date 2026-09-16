@@ -1,0 +1,53 @@
+---
+import { Badge } from "@/components/starwind/badge";
+import { Card, CardContent } from "@/components/starwind/card";
+
+const topics = [
+  "La carrera que quieres estudiar.",
+  "Las universidades disponibles.",
+  "El proceso para estudiar en Argentina.",
+  "Los requisitos que necesitas cumplir.",
+  "Las residencias CENAPE.",
+  "La planificación de tu viaje.",
+  "La inversión que debes considerar.",
+  "Becas y oportunidades disponibles.",
+  "Cómo funciona nuestra comunidad.",
+  "Los próximos pasos para comenzar.",
+];
+---
+
+<section id="orientacion" class="scroll-mt-24 bg-muted py-20 sm:py-24">
+  <div class="mx-auto grid max-w-7xl items-start gap-12 px-5 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16 lg:px-8">
+    <div class="lg:sticky lg:top-28">
+      <Badge tone="primary-accent" appearance="outline" eyebrow size="sm" class="mb-5">
+        Tu proyecto académico
+      </Badge>
+      <h2 class="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+        Ahora queremos conocerte
+      </h2>
+      <p class="mt-5 text-lg leading-8 text-muted-foreground">
+        Tu registro nos permitió conocer tu interés. Ahora queremos conocer tu proyecto. Durante tu
+        Sesión de Orientación Personalizada podremos conversar sobre:
+      </p>
+    </div>
+
+    <Card class="rounded-2xl">
+      <CardContent class="px-6 py-6 sm:px-8">
+        <ul class="grid gap-x-10 gap-y-4 sm:grid-cols-2">
+          {
+            topics.map((topic) => (
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 size-5 shrink-0 rounded-full bg-primary-accent/15 text-primary-accent">
+                  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" class="size-5 p-0.5">
+                    <path d="m4 10 4 4 8-8" />
+                  </svg>
+                </span>
+                <span class="leading-6">{topic}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </CardContent>
+    </Card>
+  </div>
+</section>

@@ -1,0 +1,44 @@
+---
+import IconArrowRight from "@tabler/icons/outline/arrow-right.svg";
+
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+
+const pillars = ["Universidad.", "Comunidad.", "Residencia.", "Acompañamiento."];
+---
+
+<section class="px-5 pb-20 pt-4 lg:px-8">
+  <div
+    class="relative mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-primary px-6 py-14 text-center text-background sm:py-16"
+  >
+    <div class="pointer-events-none absolute -left-24 -top-24 size-64 rounded-full border border-primary/30"></div>
+    <div class="pointer-events-none absolute -bottom-24 -right-24 size-64 rounded-full bg-primary-accent/10 blur-3xl"></div>
+
+    <div class="relative mx-auto max-w-2xl">
+      <Badge tone="primary-accent" appearance="solid" eyebrow size="sm" class="mx-auto mb-6">
+        Da el primer paso
+      </Badge>
+      <h2 class="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+        Tu historia en Argentina puede comenzar hoy.
+      </h2>
+      <p class="mt-5 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 font-heading text-lg font-semibold text-primary-accent">
+        {
+          pillars.map((pillar, index) => (
+            <>
+              <span class:list={[index > 0 && "before:mx-2 before:content-['·']"]}>
+                {pillar}
+              </span>
+            </>
+          ))
+        }
+      </p>
+      <p class="mt-4 leading-7 text-white/70">
+        Todo comienza con una conversación.
+      </p>
+      <Button variant="primary" size="lg" href="#agenda" class="mt-8 px-8">
+        Quiero formar parte de CENAPE
+        <IconArrowRight />
+      </Button>
+    </div>
+  </div>
+</section>

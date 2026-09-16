@@ -1,0 +1,66 @@
+---
+import IconCompass from "@tabler/icons/outline/compass.svg";
+import IconHome from "@tabler/icons/outline/home.svg";
+import IconUsers from "@tabler/icons/outline/users-group.svg";
+import IconWorld from "@tabler/icons/outline/world.svg";
+
+import { Badge } from "@/components/starwind/badge";
+
+const pillars = [
+  { label: "Un lugar donde vivir", icon: IconHome },
+  { label: "Una comunidad", icon: IconUsers },
+  { label: "Orientación", icon: IconCompass },
+  { label: "Un equipo de apoyo", icon: IconWorld },
+];
+---
+
+<section id="llegada" class="relative bg-primary-accent py-20 text-background sm:py-24">
+  <div class="mx-auto max-w-7xl px-5 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <Badge
+        tone="primary"
+        appearance="solid"
+        eyebrow
+        size="sm"
+        class="mx-auto mb-6"
+      >
+        Imagina tu llegada a Argentina
+      </Badge>
+      <h2 class="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+        Llegas a un nuevo país.
+      </h2>
+      <p class="mt-6 text-lg leading-8 text-white/70">
+        Conoces a otros jóvenes que están viviendo una experiencia similar. Tienes un lugar donde
+        vivir, tienes una comunidad, tienes orientación y tienes un equipo al que puedes acudir
+        durante tu proceso.
+      </p>
+      <p class="mt-4 font-heading text-xl font-semibold text-primary">
+        Eso es CENAPE.
+      </p>
+      <p class="mt-4 leading-7 text-white/70">
+        No queremos que simplemente estudies en Argentina. Queremos que construyas una experiencia.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        pillars.map((pillar) => {
+          const PillarIcon = pillar.icon;
+          return (
+            <div class="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-primary p-6 text-center backdrop-blur hover:shadow-xl hover:-translate-y-3 delay-150 transition-all shadow-accent/40">
+              <Badge
+                tone="primary-accent"
+                appearance="outline"
+                size="lg"
+                class="size-12 justify-center rounded-xl p-0 text-primary-accent"
+              >
+                <PillarIcon class="size-6" />
+              </Badge>
+              <p class="font-heading text-sm font-semibold text-background">{pillar.label}</p>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>

@@ -1,17 +1,41 @@
 ---
+import Layout from "@/components/starwind/Layout.astro";
+import Hero from "@/blocks/Hero.astro";
+import Diferencia from "@/blocks/Diferencia.astro";
+import Residencias from "@/blocks/Residencias.astro";
+import Llegada from "@/blocks/Llegada.astro";
+import Orientacion from "@/blocks/Orientacion.astro";
+import Padres from "@/blocks/Padres.astro";
+import Reserva from "@/blocks/Reserva.astro";
+import Cierre from "@/blocks/Cierre.astro";
 
+import Navbar, { type NavLink } from "@/blocks/Navbar.astro";
+import Footer from "@/blocks/Footer.astro";
+import { Button } from "@/components/starwind/button";
+
+const links: NavLink[] = [
+  { label: "Qué nos diferencia", href: "#diferencia" },
+  { label: "Residencias", href: "#residencias" },
+  { label: "Orientación", href: "#orientacion" },
+  { label: "Agenda tu sesión", href: "#reserva" },
+];
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <Navbar links={links} ctaText="Agenda una cita" ctaHref="#agenda" />
+  <main class="overflow-hidden">
+    <Hero />
+    <Diferencia />
+    <Residencias />
+    <Llegada />
+    <Orientacion />
+    <Padres />
+    <Reserva />
+    <Cierre />
+  </main>
+  <Footer />
+  <div class="fixed inset-x-0 bottom-0 z-40 border-t bg-background/95 p-3 shadow-[0_-8px_30px_rgba(3,4,17,.08)] backdrop-blur md:hidden">
+    <Button href="#agenda" variant="primary" size="lg" class="w-full">
+      Quiero agendar mi orientación
+    </Button>
+  </div>
+</Layout>

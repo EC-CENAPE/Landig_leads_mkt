@@ -1,0 +1,47 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import IconArrowDown from "@tabler/icons/outline/arrow-down.svg";
+import IconCalendar from "@tabler/icons/outline/calendar.svg";
+
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+
+interface Props extends HTMLAttributes<"section"> {
+  /** Section heading */
+  heading?: string;
+  /** Intro copy */
+  description?: string;
+  /** Primary CTA text */
+  primaryButtonText?: string;
+  /** Primary CTA href */
+  primaryButtonHref?: string;
+}
+---
+
+<section id="reserva" class="scroll-mt-24 bg-muted py-20 sm:py-24">
+  <div class="mx-auto max-w-3xl px-5 text-center lg:px-8">
+    <Badge tone="primary-accent" appearance="outline" eyebrow size="sm" class="mx-auto mb-5">
+      El siguiente paso es conocernos
+    </Badge>
+    <h2 class="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+      Reserva tu Sesión de Orientación
+    </h2>
+    <p class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
+      Tu registro ya está realizado. Ahora solo tienes que elegir el día y horario que mejor te
+      convenga. Agenda tu orientación y descubre cómo comenzar tu proceso hacia Argentina.
+    </p>
+    <div class="mt-8 flex flex-col items-center gap-3">
+      <Button variant="primary" size="lg" href="#agenda">
+        <IconCalendar />
+        Quiero agendar mi orientación
+      </Button>
+      <p class="flex items-center gap-2 text-sm text-muted-foreground">
+        Selecciona tu horario aquí
+        <IconArrowDown class="size-4 text-primary-accent" />
+      </p>
+    </div>
+    <p class="mt-6 text-sm text-muted-foreground">
+      La sesión es personalizada y requiere reserva previa.
+    </p>
+  </div>
+</section>

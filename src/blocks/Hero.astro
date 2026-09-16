@@ -1,0 +1,238 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import IconArrowRight from "@tabler/icons/outline/arrow-right.svg";
+import { tv } from "tailwind-variants";
+
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/starwind/card";
+import { Separator } from "@/components/starwind/separator";
+import { Skeleton } from "@/components/starwind/skeleton";
+
+interface Props extends HTMLAttributes<"section"> {
+  /** First line of the heading */
+  titleLine1?: string;
+  /** Highlighted span (accent color with underline) at the end of the heading */
+  highlighted?: string;
+  /** Intro copy below the heading */
+  description?: string;
+  /** Primary CTA text */
+  primaryButtonText?: string;
+  /** Primary CTA href */
+  primaryButtonHref?: string;
+  /** Short note shown next to the CTA */
+  note?: string;
+  /** Benefit pills shown under the description */
+  benefits?: string[];
+  /** Info row: strong label */
+  infoLabel?: string;
+  /** Info row: label description */
+  infoDescription?: string;
+  /** Info row: score text */
+  infoScore?: string;
+  /** Calendar card title */
+  calendarTitle?: string;
+  /** Calendar card description */
+  calendarDescription?: string;
+  /** Booking calendar embed URL */
+  calendarUrl?: string;
+}
+
+const heroStyles = tv({
+  base: "relative @container mx-auto w-full px-4 py-16 sm:py-20",
+});
+
+
+const {
+  titleLine1 = "Da el primer paso hacia una educación universitaria",
+  highlighted = "de calidad",
+  description = "Sabemos que estudiar en el extranjero es una decisión importante que genera dudas. En CENAPE te ayudamos a construir un camino claro hacia la universidad en Argentina, brindándote la orientación estratégica que necesitas para tomar la mejor decisión con total tranquilidad.",
+  primaryButtonText = "Quiero agendar mi orientación",
+  primaryButtonHref = "#agenda",
+  note = "Selecciona tu horario en el calendario.",
+  benefits = [
+    "Orientación universitaria",
+    "Acompañamiento en Argentina",
+    "Residencias CENAPE",
+  ],
+  infoLabel = "10",
+  infoDescription = "temas en tu sesión de orientación",
+  infoScore = "Personalizada · requiere reserva previa",
+  calendarTitle = "Reserva una Sesión de Orientación Gratuita",
+  calendarDescription = "Elige el día y la hora que mejor te convengan. Analizaremos tus opciones académicas, resolveremos tus dudas sobre el proceso de admisión",
+  calendarUrl = "https://zcal.co/i/HBh6UhWH?embed=1&embedType=iframe",
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<section class={`${heroStyles({ class: className })} max-w-7xl`} {...rest}>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 -z-10 [background-image:radial-gradient(circle_at_center,var(--color-primary)_1.5px,transparent_1.5px)] [background-size:26px_26px] [opacity:.3] [mask-image:linear-gradient(180deg,black,transparent_92%)]"
+  ></div>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-32 right-[8%] -z-10 size-96 rounded-full bg-primary-accent/10 blur-3xl"
+  ></div>
+  <div class="grid gap-12 @2xl:grid-cols-[1.05fr_0.95fr] @2xl:items-start @2xl:gap-16">
+    <div class="flex flex-col pt-1 lg:pt-8">
+      <Badge
+        tone="primary-accent"
+        appearance="frosted"
+        eyebrow
+        size="sm"
+        class="mb-6 w-fit"
+      >
+        <span class="size-1.5 rounded-full bg-primary-accent"></span>
+        Registro confirmado
+      </Badge>
+
+      <h1
+        class="font-heading text-foreground max-w-3xl text-4xl leading-[1.08] font-bold tracking-[-.04em] sm:text-5xl lg:text-[4rem]"
+      >
+        {titleLine1}{" "}
+        <span
+          class="relative whitespace-nowrap text-primary-accent after:absolute after:inset-x-0 after:bottom-1 after:-z-10 after:h-3 after:bg-primary/30"
+          >{highlighted}</span
+        >
+      </h1>
+
+      <p class="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground">
+        {description}
+      </p>
+
+      <div class="mt-7 grid gap-3 sm:grid-cols-3">
+        {benefits.map((benefit) => (
+          <Badge
+            tone="success"
+            appearance="soft"
+            size="sm"
+            class="justify-start whitespace-normal"
+          >
+            <svg
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              class="size-3.5 shrink-0"
+            >
+              <path d="m4 10 4 4 8-8" />
+            </svg>
+            {benefit}
+          </Badge>
+        ))}
+      </div>
+
+      <div class="mt-9 flex flex-wrap items-center gap-4">
+        <Button
+          variant="primary"
+          size="lg"
+          href={primaryButtonHref}
+          class="rounded-xl px-7 font-bold shadow-lg shadow-primary/15 hover:-translate-y-0.5"
+        >
+          {primaryButtonText}
+          <IconArrowRight />
+        </Button>
+        <span class="text-sm text-muted-foreground">{note}</span>
+      </div>
+
+      <Separator class="mt-10" />
+
+      <div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+        <strong class="font-heading text-xl text-foreground">{infoLabel}</strong>
+        <span>{infoDescription}</span>
+        <Separator orientation="vertical" class="hidden h-5 sm:block" />
+        <strong class="text-primary-accent">★★★★★</strong>
+        <span>{infoScore}</span>
+      </div>
+    </div>
+
+    <div id="agenda">
+      <Card
+        class="scroll-mt-24 grid rounded-[1.75rem] border-primary-accent/40 bg-foreground px-5 text-background shadow-2xl shadow-slate-900/20"
+      >
+        <CardHeader>
+          <Badge tone="primary-accent" appearance="outline" eyebrow size="sm" class="w-fit">
+            Sesión de Orientación
+          </Badge>
+          <CardTitle>
+            <h2 class="font-heading text-2xl font-semibold text-background">{calendarTitle}</h2>
+          </CardTitle>
+          <CardDescription class="leading-6 text-background/65 text-sm">
+            {calendarDescription}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div
+            data-calendar
+            data-calendar-url={calendarUrl}
+            role="region"
+            aria-label={calendarTitle}
+            aria-busy="true"
+            class="relative w-full overflow-hidden rounded-xl bg-background"
+          >
+            <div data-calendar-fallback class="absolute inset-0 p-4">
+              <Skeleton class="size-full" />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  </div>
+</section>
+
+<script>
+  const loadCalendar = (container: Element) => {
+    if (container.hasAttribute("data-loaded")) return;
+    container.setAttribute("data-loaded", "");
+
+    const url = container.getAttribute("data-calendar-url") ?? "https://zcal.co/i/HBh6UhWH?embed=1&embedType=iframe";
+    const iframe = document.createElement("iframe");
+    iframe.setAttribute("src", url);
+    iframe.setAttribute("title", "Agenda ahora tu Sesión de Orientación Personalizada");
+    iframe.setAttribute("loading", "lazy");
+    iframe.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+    iframe.setAttribute("allow", "clipboard-write; fullscreen");
+    iframe.setAttribute("scrolling", "auto");
+    iframe.setAttribute(
+      "style",
+      "border:none; min-width:320px; min-height:544px; height:500px; width:540px; max-width:100%; overflow-y:auto",
+    );
+    iframe.classList.add("block", "mx-auto", "bg-white");
+
+    const ready = () => {
+      container.querySelector("[data-calendar-fallback]")?.remove();
+      container.setAttribute("aria-busy", "false");
+    };
+    iframe.addEventListener("load", ready);
+    iframe.addEventListener("error", ready);
+
+    container.appendChild(iframe);
+  };
+
+  const containers = Array.from(document.querySelectorAll("[data-calendar]"));
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            loadCalendar(entry.target as Element);
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { rootMargin: "200px 0px" },
+    );
+    for (const container of containers) observer.observe(container);
+  } else {
+    for (const container of containers) loadCalendar(container);
+  }
+</script>

@@ -1,0 +1,59 @@
+---
+import IconHome from "@tabler/icons/outline/home.svg";
+
+import { Badge } from "@/components/starwind/badge";
+import { Card, CardContent } from "@/components/starwind/card";
+
+const values = ["Vivir.", "Estudiar.", "Compartir.", "Crecer."];
+---
+
+<section id="residencias" class="scroll-mt-24 py-20 sm:py-24">
+  <div class="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:gap-16 lg:px-8">
+    <div>
+      <Badge tone="primary-accent" appearance="outline" eyebrow size="sm" class="mb-5">
+        Residencias CENAPE
+      </Badge>
+      <h2 class="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+        Mucho más que un lugar donde vivir
+      </h2>
+      <p class="mt-5 text-lg leading-8 text-muted-foreground">
+        Tu residencia también forma parte de tu experiencia CENAPE. Una de las mayores
+        preocupaciones de una familia cuando su hijo decide estudiar en otro país es:
+      </p>
+      <blockquote class="mt-4 border-l-4 border-primary-accent pl-4 font-heading text-2xl font-semibold">
+        ¿Dónde va a vivir?
+      </blockquote>
+      <div class="mt-6 flex flex-wrap gap-2">
+        {
+          values.map((value) => (
+            <Badge tone="primary" appearance="soft" size="lg" class="font-heading font-semibold">
+              {value}
+            </Badge>
+          ))
+        }
+      </div>
+    </div>
+
+    <Card class="rounded-3xl border-primary/40 bg-card shadow-xl">
+      <CardContent class="flex flex-col gap-4 px-8 py-8">
+        <Badge tone="primary-accent" appearance="soft" size="sm" class="w-fit">
+          <IconHome class="size-4" />
+          Comunidad CENAPE
+        </Badge>
+        <p class="text-lg leading-8 text-foreground">
+          Por eso desarrollamos nuestras propias residencias estudiantiles CENAPE. Son espacios de
+          alto nivel, preparados para estudiantes y pensados para crear una verdadera comunidad.
+        </p>
+        <p class="leading-7 text-muted-foreground">
+          Aquí no llegas simplemente a alquilar una habitación. Llegas a un lugar donde vas a vivir
+          con otros estudiantes CENAPE. Un espacio para estudiar, compartir, hacer amigos y comenzar
+          esta nueva etapa acompañado.
+        </p>
+        <p class="pt-2 font-heading font-semibold text-primary">
+          Todo dentro de una comunidad que comparte el mismo objetivo: construir su futuro en
+          Argentina.
+        </p>
+      </CardContent>
+    </Card>
+  </div>
+</section>

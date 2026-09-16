@@ -1,0 +1,104 @@
+---
+import IconCap from "@tabler/icons/outline/cap-straight.svg";
+import IconBuildings from "@tabler/icons/outline/buildings.svg";
+import IconPlane from "@tabler/icons/outline/plane-departure.svg";
+import IconShield from "@tabler/icons/outline/shield-check.svg";
+import IconUsers from "@tabler/icons/outline/users-group.svg";
+
+import { Badge } from "@/components/starwind/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/starwind/card";
+
+const differences = [
+  {
+    title: "Orientación universitaria",
+    description:
+      "Te ayudamos a conocer tus opciones académicas y a definir el camino más adecuado para tu proyecto.",
+    icon: IconCap,
+  },
+  {
+    title: "Acompañamiento en Argentina",
+    description: "Te orientamos durante tu llegada y adaptación a tu nueva vida.",
+    icon: IconPlane,
+  },
+  {
+    title: "Residencias CENAPE",
+    description:
+      "Contamos con nuestras propias residencias estudiantiles de alto nivel, preparadas especialmente para nuestra comunidad.",
+    icon: IconBuildings,
+  },
+  {
+    title: "Una comunidad de estudiantes",
+    description:
+      "Vivirás junto a otros estudiantes que también forman parte de CENAPE, creando vínculos y experiencias desde el primer día.",
+    icon: IconUsers,
+  },
+  {
+    title: "Un entorno seleccionado",
+    description:
+      "Nuestras residencias no son un alojamiento abierto al público. Son espacios destinados a estudiantes que forman parte de la comunidad CENAPE y que han sido aceptados en nuestro programa.",
+    icon: IconShield,
+    featured: true,
+  },
+];
+---
+
+<section id="diferencia" class="scroll-mt-24 bg-muted py-20 sm:py-24">
+  <div class="mx-auto max-w-7xl px-5 lg:px-8">
+    <div class="max-w-2xl">
+      <Badge tone="primary-accent" appearance="outline" eyebrow size="sm" class="mb-5">
+        Nuestra comunidad
+      </Badge>
+      <h2 class="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+        Qué hace diferente a CENAPE
+      </h2>
+      <p class="mt-5 text-lg leading-8 text-muted-foreground">
+        Estudiar en otro país no debería significar llegar solo. En CENAPE creemos que estudiar en
+        Argentina es mucho más que ingresar a una universidad.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        differences.map((item) => {
+          const DifferenceIcon = item.icon;
+          return (
+            <Card
+              class:list={[
+                "group rounded-2xl transition hover:-translate-y-1 hover:shadow-xl",
+                item.featured
+                  ? "border-primary/40 bg-primary text-background shadow-lg dark:border-primary/60"
+                  : "hover:border-primary/60",
+              ]}
+            >
+              <CardHeader>
+                <Badge
+                  tone="primary-accent"
+                  appearance={item.featured ? "solid" : "soft"}
+                  size="lg"
+                  class="size-11 justify-center rounded-xl p-0"
+                >
+                  <DifferenceIcon class="size-5" />
+                </Badge>
+                <CardTitle
+                  class:list={[
+                    "font-heading text-lg font-semibold",
+                    item.featured && "text-background",
+                  ]}
+                >
+                  {item.title}
+                </CardTitle>
+                <CardContent class="px-0">
+                  <CardDescription
+                    class:list={["leading-6", item.featured && "text-background/70"]}
+                  >
+                    {item.description}
+                  </CardDescription>
+                </CardContent>
+              </CardHeader>
+            </Card>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
