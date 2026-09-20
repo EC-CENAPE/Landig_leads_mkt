@@ -1,0 +1,107 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { tv } from "tailwind-variants";
+
+import { Badge } from "@/components/starwind/badge";
+import { Card } from "@/components/starwind/card";
+import IconArrowRight from "@tabler/icons/outline/arrow-right.svg";
+
+import SectionHeader from "./SectionHeader.astro";
+
+/** Real estate listing card content */
+export interface Deal {
+  /** Property image URL */
+  img: string;
+  /** Price, e.g. "$92,000" */
+  price: string;
+  /** City and state, e.g. "Cleveland, OH" */
+  city: string;
+  /** Net monthly flow, e.g. "+$490 USD" */
+  flow: string;
+  /** Approximate down payment, e.g. "$18,400" */
+  down: string;
+  /** Specs line: beds, baths, rent, sqft */
+  specs: string;
+}
+
+interface Props extends HTMLAttributes<"section"> {
+  eyebrow?: string;
+  title?: string;
+  lead?: string;
+  deals?: Deal[];
+  footnote?: string;
+  /** Badge on each card image corner */
+  badgeText?: string;
+  /** First metric label (left cell) */
+  flowLabel?: string;
+  /** Second metric label (right cell) */
+  downLabel?: string;
+  /** Card footer CTA label */
+  ctaLabel?: string;
+  /** Prefix for the image alt text */
+  imgAltPrefix?: string;
+}
+
+const propertiesStyles = tv({
+  base: "py-16 md:py-24",
+});
+
+const {
+  eyebrow = "Portfolio disponible",
+  title = "Casas rentables disponibles en el programa",
+  lead = "Un vistazo al tipo de propiedades que analizamos con S8Tracker antes de recomendarte la compra. Cada caso se procesa y se negocia de manera individual.",
+  deals = [],
+  footnote = "Flujos calculados de forma conservadora y proyectados para los próximos 12 meses. Precios en USD, al momento de publicación.",
+  badgeText = "EN VENTA",
+  flowLabel = "Flujo neto/mes",
+  downLabel = "Enganche aprox.",
+  ctaLabel = "Ver desglose y retorno",
+  imgAltPrefix = "Casa en ",
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<section class={propertiesStyles({ class: className })} {...rest}>
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <SectionHeader eyebrow={eyebrow} title={title} lead={lead} />
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        deals.map((deal) => (
+          <a href="#agendar" class="group block">
+            <Card class="overflow-hidden rounded-2xl border-border bg-[#0b0f19] transition-all duration-300 hover:-translate-y-1 hover:border-primary/40">
+              <div class="relative overflow-hidden">
+                <img src={deal.img} alt={`${imgAltPrefix}${deal.city}`} class="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <Badge tone="primary" appearance="solid" size="sm" class="absolute top-3 right-3 py-1 text-[10px] font-black tracking-wider shadow-lg">
+                  {badgeText}
+                </Badge>
+              </div>
+              <div class="p-5">
+                <div class="flex items-center justify-between gap-3">
+                  <h3 class="text-2xl font-black text-white">{deal.price}</h3>
+                  <span class="text-sm font-medium text-slate-400">{deal.city}</span>
+                </div>
+                <div class="mt-4 grid grid-cols-2 gap-3 rounded-xl border border-border bg-[#090d16] p-3 text-center">
+                  <div>
+                    <p class="text-[10px] font-semibold tracking-wider text-slate-500 uppercase">{flowLabel}</p>
+                    <p class="mt-1 text-lg font-black text-primary">{deal.flow}</p>
+                  </div>
+                  <div>
+                    <p class="text-[10px] font-semibold tracking-wider text-slate-500 uppercase">{downLabel}</p>
+                    <p class="mt-1 text-lg font-black text-white">{deal.down}</p>
+                  </div>
+                </div>
+                <p class="mt-4 text-xs leading-relaxed text-slate-400">{deal.specs}</p>
+                <span class="mt-5 inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-primary/40 py-2.5 text-sm font-semibold text-primary transition group-hover:bg-primary/10">
+                  {ctaLabel}
+                  <IconArrowRight class="size-4"></IconArrowRight>
+                </span>
+              </div>
+            </Card>
+          </a>
+        ))
+      }
+    </div>
+    {footnote !== "" && <p class="mt-8 text-center text-xs text-slate-500">{footnote}</p>}
+  </div>
+</section>

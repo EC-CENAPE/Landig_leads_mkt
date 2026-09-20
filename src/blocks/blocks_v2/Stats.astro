@@ -1,0 +1,40 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { tv } from "tailwind-variants";
+
+export interface Stat {
+  /** Headline value, e.g. "+600" */
+  value: string;
+  /** Label under the value */
+  label: string;
+  /** Render the value in lime */
+  lime?: boolean;
+}
+
+interface Props extends HTMLAttributes<"section"> {
+  stats?: Stat[];
+}
+
+const statsStyles = tv({
+  base: "border-y border-border bg-[#090d16] py-8",
+});
+
+const { stats = [], class: className, ...rest } = Astro.props;
+---
+
+<section class={statsStyles({ class: className })} {...rest}>
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="grid grid-cols-2 gap-6 text-center md:grid-cols-4">
+      {
+        stats.map((stat) => (
+          <div class="flex flex-col items-center">
+            <span class={`text-2xl font-black sm:text-3xl ${stat.lime ? "text-primary" : "text-white"}`}>
+              {stat.value}
+            </span>
+            <span class="mt-1 text-xs text-slate-400 sm:text-sm">{stat.label}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

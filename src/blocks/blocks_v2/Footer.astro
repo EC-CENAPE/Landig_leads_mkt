@@ -1,0 +1,154 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { tv } from "tailwind-variants";
+
+import IconCalendar from "@tabler/icons/outline/calendar.svg";
+import IconMail from "@tabler/icons/outline/mail.svg";
+import IconPhone from "@tabler/icons/outline/phone.svg";
+import IconShieldCheck from "@tabler/icons/outline/shield-check.svg";
+
+import { Icon } from "astro-icon/components";
+
+/** Contact / info row shown in the footer */
+export interface Contact {
+  /** Icon key: "mail" | "phone" | "calendar" */
+  type?: "mail" | "phone" | "calendar";
+  label?: string;
+  /** Optional link (mailto/tel/url) */
+  href?: string;
+}
+
+interface Props extends HTMLAttributes<"footer"> {
+  brandName?: string;
+  brandAccent?: string;
+  /** Mark shown in the small brand box when brandName is set */
+  brandMark?: string;
+  blurb?: string;
+  /** Badge chip text shown next to the brand */
+  badgeText?: string;
+  contacts?: Contact[];
+  legalLabel?: string;
+  legalLinks?: string[];
+  copyright?: string;
+  /** Long legal / disclaimer note */
+  legalNote?: string;
+  /** Chat link label (empty hides the row) */
+  chatLabel?: string;
+}
+
+const footerStyles = tv({
+  base: "border-t border-border bg-[#05070c]",
+});
+
+const {
+  brandMark = "S8",
+  blurb = "Convertimos tu capital en casas que te pagan cada mes, con la renta asegurada por el gobierno de EE.UU.",
+  badgeText = "100% GARANTÍA",
+  contacts = [],
+  legalLabel = "Legal",
+  legalLinks = [
+    "Términos y condiciones",
+    "Política de privacidad",
+    "Respaldos y garantías",
+  ],
+  copyright = "© 2026 Academia Sección 8 - ACADEMIA S8 LLC. Todos los derechos reservados.",
+  legalNote = "Declaración legal: Este sitio y su contenido son una obra educativa independiente. No está patrocinado, respaldado ni asociado de ningún modo con Meta Platforms, Inc. (Facebook/Instagram), con el Departamento de Vivienda de EE.UU. (HUD) ni con ningún ente gubernamental. Los logotipos y marcas de Facebook pertenecen a sus respectivos dueños. Los resultados varían y no garantizan ganancias.",
+  chatLabel = "Meta / Facebook",
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<footer class={footerStyles({ class: className })} {...rest}>
+  <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+    <div class="grid gap-10 md:grid-cols-[220px_1.2fr_1fr]">
+      <div class="flex flex-col items-start gap-4">
+        <div class="flex items-center gap-2.5">
+          <Icon name="Logo-blanco" class="text-3xl" />
+        </div>
+        <p class="text-xs leading-relaxed text-slate-500">{blurb}</p>
+        <a
+          href="#top"
+          class="mt-1 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-black text-black shadow-lg shadow-primary/20 transition hover:bg-[#a7df03]"
+        >
+          <IconShieldCheck class="size-4" />
+          {badgeText}
+        </a>
+      </div>
+      <div>
+        <p class="text-sm font-bold text-white">Contacto directo</p>
+        <ul class="mt-4 space-y-3 text-sm text-slate-400">
+          {
+            contacts.map((contact) => {
+              const type = contact.type ?? "mail";
+              const label = (
+                <>
+                  {type === "mail" && (
+                    <IconMail class="size-4 text-slate-500" />
+                  )}
+                  {type === "phone" && (
+                    <IconPhone class="size-4 text-slate-500" />
+                  )}
+                  {type === "calendar" && (
+                    <IconCalendar class="size-4 text-slate-500" />
+                  )}
+                  {contact.label}
+                </>
+              );
+              return contact.href ? (
+                <li>
+                  <a
+                    href={contact.href}
+                    class="inline-flex items-center gap-2 transition hover:text-primary"
+                  >
+                    {label}
+                  </a>
+                </li>
+              ) : (
+                <li class="inline-flex items-center gap-2">{label}</li>
+              );
+            })
+          }
+        </ul>
+      </div>
+      <div>
+        {
+          legalLabel !== "" && (
+            <p class="text-sm font-bold text-white">{legalLabel}</p>
+          )
+        }
+        <ul class="mt-4 space-y-3 text-sm text-slate-400">
+          {
+            legalLinks.map((link) => (
+              <li>
+                <a href="#" class="transition hover:text-primary">
+                  {link}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+    <div
+      class="mt-12 flex flex-col items-center justify-between gap-3 border-t border-border pt-6 text-xs text-slate-500 md:flex-row"
+    >
+      <p>{copyright}</p>
+      {
+        chatLabel !== "" && (
+          <p class="inline-flex items-center gap-1.5">
+            <svg
+              viewBox="0 0 24 24"
+              class="size-4 fill-current"
+              aria-hidden="true"
+            >
+              <path d="M13 3.4c-5.2 0-9.6 3.8-9.6 8.6 0 2.7 1.4 5 3.5 6.5V21l3.4-1.9c.9.2 1.8.4 2.7.4 5.2 0 9.6-3.8 9.6-8.6S18.2 3.4 13 3.4zm0 13.1c-1.4 0-2.7-.4-3.8-1L6.5 16.3l1.3-.7c-.9-.5-1.6-1.2-2.2-2.1a5 5 0 0 1-.9-2.6c0-3.2 3.7-5.7 8.3-5.7s8.3 2.5 8.3 5.7-3.7 5.9-8.3 5.9zm4.6-4.6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.2-.5.1-.2.2-.6.8-.7.9-.1.2-.3.2-.5.1a6.5 6.5 0 0 1-3.3-2.9c-.2-.4 0-.5.2-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.5 0-.7 0-.1-.5-1.4-.7-1.9-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.5.1-.7.3-.2.2-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.2.75 2.9.7.4 0 1.4-.5 1.6-1 .2-.5.2-.9.1-1s-.2-.3-.5-.4z" />
+            </svg>
+            {chatLabel}
+          </p>
+        )
+      }
+    </div>
+    <p class="mt-4 text-[10px] leading-relaxed text-slate-600">{legalNote}</p>
+  </div>
+</footer>

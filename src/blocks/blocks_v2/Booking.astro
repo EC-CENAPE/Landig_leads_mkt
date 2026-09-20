@@ -1,0 +1,116 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { tv } from "tailwind-variants";
+
+import IconCheck from "@tabler/icons/outline/check.svg";
+
+import SectionHeader from "./SectionHeader.astro";
+
+interface Props extends HTMLAttributes<"section"> {
+  eyebrow?: string;
+  title?: string;
+  lead?: string;
+  /** Left column list heading */
+  listLabel?: string;
+  /** What happens on the call, bullet list */
+  list?: string[];
+  /** Requirement box label */
+  requirementLabel?: string;
+  /** Requirement text */
+  requirement?: string;
+  /** White card header */
+  callTitle?: string;
+  /** White card meta line */
+  callMeta?: string;
+  /** Availability badge */
+  availabilityBadge?: string;
+  /** Mark shown in the white card header */
+  brandMark?: string;
+  /** ZCal booking embed URL */
+  zcalUrl?: string;
+  /** ZCal iframe height in px */
+  zcalHeight?: number;
+}
+
+const bookingStyles = tv({
+  base: "relative scroll-mt-24 overflow-hidden border-t border-border py-16 md:py-24",
+});
+
+const {
+  eyebrow = "Reserva tu lugar",
+  title = "Agenda tu llamada estratégica",
+  lead = "Cupos limitados cada semana. Elige el día y la hora que mejor te queden y confirma tu lugar en el calendario.",
+  listLabel = "¿Qué pasa en la llamada?",
+  list = [],
+  requirementLabel = "Requisito obligatorio",
+  requirement = "Contar con un mínimo de $15,000 USD disponibles para invertir este año 2026.",
+  callTitle = "Llamada de Introducción Estratégica",
+  callMeta = "45 min • Google Meet",
+  availabilityBadge = "Cupos Limitados",
+  brandMark = "S8",
+  zcalUrl = "https://zcal.co/i/HBh6UhWH?embed=1&embedType=iframe",
+  zcalHeight = 560,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<section class={bookingStyles({ class: className })} {...rest}>
+  <div class="pointer-events-none absolute top-0 left-1/2 h-72 w-[600px] -translate-x-1/2 rounded-full bg-primary/10 blur-[130px]"></div>
+  <div class="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="grid items-start gap-10 lg:grid-cols-2">
+      <div>
+        <SectionHeader eyebrow={eyebrow} title={title} lead={lead} class="mb-4 text-left" />
+        <div class="rounded-2xl border border-border bg-[#0c111c] p-6">
+          {listLabel !== "" && <p class="text-sm font-bold text-white">{listLabel}</p>}
+          {
+            list.length > 0 && (
+              <ul class="mt-4 space-y-3">
+                {
+                  list.map((item) => (
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                      <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary"><IconCheck class="size-4"></IconCheck></span>
+                      {item}
+                    </li>
+                  ))
+                }
+              </ul>
+            )
+          }
+        </div>
+        <div class="mt-4 rounded-2xl border border-primary/30 bg-[#0c111c] p-6">
+          {requirementLabel !== "" && (
+            <p class="text-xs font-bold tracking-wider text-primary uppercase">{requirementLabel}</p>
+          )}
+          <p class="mt-2 text-sm text-slate-300">
+            {requirement}
+          </p>
+        </div>
+      </div>
+
+      <div class="rounded-3xl bg-white p-6 text-slate-900 shadow-2xl sm:p-8">
+        <div class="flex items-start gap-3.5">
+          <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-lg font-black text-primary">{brandMark}</span>
+          <div class="flex-1">
+            <p class="text-base font-extrabold">{callTitle}</p>
+            <p class="mt-0.5 text-xs font-medium text-slate-500">{callMeta}</p>
+          </div>
+          {availabilityBadge !== "" && (
+            <span class="shrink-0 rounded-full bg-red-500 px-2.5 py-1 text-[10px] font-bold text-white">{availabilityBadge}</span>
+          )}
+        </div>
+        <hr class="my-5 border-slate-200" />
+        <div class="overflow-hidden rounded-xl border border-slate-200">
+          <iframe
+            src={zcalUrl}
+            title={callTitle}
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allow="clipboard-write; fullscreen"
+            style={{ border: "none", display: "block", width: "100%", height: `${zcalHeight}px`, background: "white" }}
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

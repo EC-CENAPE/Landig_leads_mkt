@@ -179,3 +179,50 @@
     border-radius: 9999px !important;
   }
 }
+
+/* ===== Tema "clon" · Landing Section 8 (oscuro #07090e + lima #BFFF04) =====
+   Se aplica con class="theme-s8" en <body> (ver src/pages/clon.astro). */
+.theme-s8 {
+  font-family: "Inter", "Inter Variable", var(--font-sans);
+  color-scheme: dark;
+
+  --background: #07090e;
+  --foreground: #e2e8f0;
+  --card: #0b0f19;
+  --card-foreground: #e2e8f0;
+  --popover: #0b0f19;
+  --popover-foreground: #e2e8f0;
+  --primary: #bfff04;
+  --primary-foreground: #000000;
+  --primary-accent: #a7df03;
+  --secondary: #0c111c;
+  --secondary-foreground: #e2e8f0;
+  --secondary-accent: #a7df03;
+  --muted: #090d16;
+  --muted-foreground: #8f9bb3;
+  --accent: #0e131f;
+  --accent-foreground: #e2e8f0;
+  --info: #3e9bff;
+  --info-foreground: #ffffff;
+  --success: #bfff04;
+  --success-foreground: #000000;
+  --warning: var(--color-amber-300);
+  --warning-foreground: var(--color-amber-950);
+  --error: #f87171;
+  --error-foreground: #2a0a0a;
+  --border: #1e293b;
+  --input: #1c2438;
+  --outline: #bfff04;
+  --radius: 0.75rem;
+  --font-heading: "Inter", "Inter Variable", var(--font-sans);
+
+  /* sidebar variables */
+  --sidebar-background: #0b0f19;
+  --sidebar-foreground: #e2e8f0;
+  --sidebar-primary: #bfff04;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #0e131f;
+  --sidebar-accent-foreground: #e2e8f0;
+  --sidebar-border: #1e293b;
+  --sidebar-outline: #bfff04;
+}

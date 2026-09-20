@@ -1,0 +1,45 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { tv } from "tailwind-variants";
+
+import "./landing.css";
+
+interface Props extends HTMLAttributes<"div"> {
+  /** Phrases shown in the scrolling ticker (each is duplicated for a seamless loop) */
+  phrases?: string[];
+}
+
+const tickerStyles = tv({
+  base: "overflow-hidden border-b border-border/80 bg-black/30 py-2.5 select-none",
+});
+
+const { phrases = ["Renta del gobierno asegurada cada mes"], class: className, ...rest } =
+  Astro.props;
+---
+
+<div class={tickerStyles({ class: className })} {...rest}>
+  <div class="s8-mq-track flex w-max items-center whitespace-nowrap">
+    {
+      phrases.map((phrase) => (
+        <span class="flex items-center">
+          <span class="mr-2 inline-flex items-center gap-2">
+            <span class="size-1.5 shrink-0 rounded-full bg-primary"></span>
+            {phrase}
+          </span>
+          <span class="mx-4 text-muted-foreground/40">◆</span>
+        </span>
+      ))
+    }
+    {
+      phrases.map((phrase) => (
+        <span class="flex items-center">
+          <span class="mr-2 inline-flex items-center gap-2">
+            <span class="size-1.5 shrink-0 rounded-full bg-primary"></span>
+            {phrase}
+          </span>
+          <span class="mx-4 text-muted-foreground/40">◆</span>
+        </span>
+      ))
+    }
+  </div>
+</div>

@@ -1,0 +1,63 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { tv } from "tailwind-variants";
+
+type GlowPosition = "center" | "top" | "bottom" | "top-left" | "top-right";
+type GlowColor =
+  "primary" | "primary-accent" | "purple" | "blue" | "cyan" | "emerald" | "amber" | "rose";
+
+interface Props extends HTMLAttributes<"div"> {
+  /** Position of the glow */
+  position?: GlowPosition;
+  /** Glow color theme */
+  color?: GlowColor;
+  /** Glow intensity (0-1) */
+  intensity?: number;
+  /** Glow size multiplier */
+  size?: number;
+}
+
+const patternStyles = tv({
+  base: "pointer-events-none absolute inset-0 overflow-hidden",
+});
+
+const positionClasses: Record<GlowPosition, string> = {
+  center: "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
+  top: "left-1/2 top-0 -translate-x-1/2 -translate-y-1/2",
+  bottom: "left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2",
+  "top-left": "left-0 top-0 -translate-x-1/2 -translate-y-1/2",
+  "top-right": "right-0 top-0 translate-x-1/2 -translate-y-1/2",
+};
+
+const colorClasses: Record<GlowColor, string> = {
+  primary: "bg-primary",
+  "primary-accent": "bg-primary-accent",
+  purple: "bg-purple-500",
+  blue: "bg-blue-500",
+  cyan: "bg-cyan-500",
+  emerald: "bg-emerald-500",
+  amber: "bg-amber-500",
+  rose: "bg-rose-500",
+};
+
+const {
+  position = "center",
+  color = "primary",
+  intensity = 0.15,
+  size = 1,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<div class={patternStyles({ class: className })} aria-hidden="true" {...rest}>
+  <div
+    class:list={[
+      "absolute aspect-square rounded-full blur-[100px]",
+      positionClasses[position],
+      colorClasses[color],
+    ]}
+    style={`width: ${60 * size}%; opacity: ${intensity}`}
+  >
+  </div>
+</div>

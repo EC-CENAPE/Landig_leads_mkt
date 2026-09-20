@@ -1,0 +1,187 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { tv } from "tailwind-variants";
+import { Video } from "@/components/starwind/video";
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+import IconArrowRight from "@tabler/icons/outline/arrow-right.svg";
+import IconShieldCheck from "@tabler/icons/outline/shield-check.svg";
+
+import "./landing.css";
+
+/** Video player mockup labels */
+export interface VSL {
+  /** Main play overlay text */
+  title?: string;
+  /** Duration label */
+  duration?: string;
+  /** Corner case-study badge */
+  caseBadge?: string;
+}
+
+interface Props extends HTMLAttributes<"section"> {
+  /** Badge above the headline */
+  badge?: string;
+  /** Text before the highlighted money */
+  titleStart?: string;
+  /** Highlighted money amount (lime underline) */
+  money?: string;
+  /** Text between money and range */
+  titleMiddle?: string;
+  /** Highlighted rent range (white) */
+  range?: string;
+  /** Text after the range */
+  titleEnd?: string;
+  /** Gradient-highlighted closing words */
+  gradientText?: string;
+  /** Subheading paragraph */
+  description?: string;
+  /** VSL mockup labels */
+  vsl?: VSL;
+  /** CTA button text */
+  ctaText?: string;
+  /** CTA button href */
+  ctaHref?: string;
+  /** Guarantee label (plain part before the strong part) */
+  guarantee?: string;
+  /** Guarantee label strong part */
+  guaranteeAccent?: string;
+  /** Social proof lead (rendered bold) */
+  proofPrefix?: string;
+  /** Social proof rest of sentence */
+  proof?: string;
+  /** Avatar initials (each rendered as a circle) */
+  avatars?: string[];
+}
+
+const heroStyles = tv({
+  base: "relative overflow-hidden pt-12 pb-20 md:pt-16 md:pb-28",
+});
+
+const {
+  badge = "PROGRAMA DE INVERSIÓN PATRIMONIAL 2026",
+  titleStart = "En 90 Días Convierte ",
+  money = "$20K USD",
+  titleMiddle = " en 1 Casa que te Paga ",
+  range = "$400 a $700 USD",
+  titleEnd = " Netos al Mes, con la ",
+  gradientText = "Renta Asegurada por el Gobierno",
+  description = "Te guiamos personalmente, 1 a 1, durante todo el proceso: selección de mercado, negociación, financiamiento, alquiler y administración.",
+  vsl = {
+    title: "Ver Clase Maestra: Cómo Funciona Sección 8",
+    duration: "Duración: 14 min de puro valor práctico",
+    caseBadge: "Caso Real: Caso de éxito +$5,200/mes",
+  },
+  ctaText = "Agenda tu llamada estratégica gratis",
+  ctaHref = "#agendar",
+  guarantee = "Si no compras una casa bajo nuestro sistema, ",
+  guaranteeAccent = "te devolvemos el 100% por contrato",
+  proofPrefix = "+600 inversores",
+  proof = " ya construyen su portafolio con la Academia",
+  avatars = ["JD", "MC", "AP", "HR"],
+  class: className,
+  ...rest
+} = Astro.props;
+
+const avatarTones = [
+  "bg-slate-700",
+  "bg-blue-700",
+  "bg-amber-600",
+  "bg-emerald-600",
+  "bg-purple-700",
+];
+---
+
+<section class={heroStyles({ class: className })} {...rest}>
+  <div
+    class="pointer-events-none absolute top-1/4 left-1/2 h-80 w-[550px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[130px]"
+  >
+  </div>
+  <div class="relative z-10 mx-auto max-w-5xl px-4 text-center sm:px-6">
+    <Badge
+      tone="primary"
+      appearance="outline"
+      size="lg"
+      class="mb-6 border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary sm:text-sm"
+    >
+      {badge}
+    </Badge>
+    <h1
+      class="mx-auto mb-6 max-w-4xl text-3xl leading-[1.15] font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl"
+    >
+      {titleStart}
+      <span
+        class="text-primary underline decoration-primary/40 underline-offset-8"
+        >{money}</span
+      >
+      {titleMiddle}
+      <span class="text-white">{range}</span>
+      {titleEnd}
+      <span class="s8-grad">{gradientText}</span>
+    </h1>
+    <p
+      class="mx-auto mb-10 max-w-3xl text-base leading-relaxed text-slate-300 sm:text-lg md:text-xl"
+    >
+      {description}
+    </p>
+
+    <div
+      class="s8-glow mx-auto mb-10 max-w-4xl rounded-2xl border border-border/70 bg-gradient-to-b from-[#1e293b]/60 to-[#0f172a]/90 p-2 shadow-2xl sm:p-3"
+    >
+      <Video
+        src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        title="YouTube video"
+        class="rounded-lg"
+      />
+    </div>
+
+    <div class="flex flex-col items-center justify-center gap-4">
+      <Button
+        as="a"
+        href={ctaHref}
+        variant="primary"
+        size="lg"
+        class="w-full px-8 py-4 shadow-xl sm:w-auto"
+      >
+        <span>{ctaText}</span>
+        <IconArrowRight class="size-5" />
+      </Button>
+      {
+        guarantee !== "" && (
+          <div
+            class="inline-flex items-center gap-2 text-xs font-medium text-slate-300 sm:text-sm"
+          >
+            <IconShieldCheck class="size-4 shrink-0 text-primary" />
+            <span>
+              {guarantee}
+              <strong class="text-white">{guaranteeAccent}</strong>
+            </span>
+          </div>
+        )
+      }
+      {
+        proofPrefix !== "" && (
+          <div
+            class="mt-4 flex flex-col items-center gap-3 text-xs text-slate-400 sm:flex-row sm:text-sm"
+          >
+            <div class="flex -space-x-2 overflow-hidden">
+              {
+                avatars.map((initials, i) => (
+                  <span
+                    class={`flex size-8 items-center justify-center rounded-full text-xs font-bold text-white ring-2 ring-background ${avatarTones[i % avatarTones.length]}`}
+                  >
+                    {initials}
+                  </span>
+                ))
+              }
+            </div>
+            <p>
+              <strong class="font-semibold text-white">{proofPrefix}</strong>
+              {proof}
+            </p>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>

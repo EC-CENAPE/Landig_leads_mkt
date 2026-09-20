@@ -1,0 +1,100 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { tv } from "tailwind-variants";
+
+import IconCheck from "@tabler/icons/outline/check.svg";
+import IconX from "@tabler/icons/outline/x.svg";
+
+import SectionHeader from "./SectionHeader.astro";
+
+/** "Yes" fit item with an optional bold fragment */
+export interface YesItem {
+  /** Text before the highlighted fragment */
+  text?: string;
+  /** Highlighted fragment (rendered bold / white) */
+  strong?: string;
+  /** Text after the highlighted fragment */
+  post?: string;
+}
+
+interface Props extends HTMLAttributes<"section"> {
+  eyebrow?: string;
+  title?: string;
+  lead?: string;
+  /** "Yes" column title */
+  yesTitle?: string;
+  /** "No" column title */
+  noTitle?: string;
+  yes?: YesItem[];
+  no?: string[];
+  /** Note under the grid */
+  footer?: string;
+}
+
+const fitStyles = tv({
+  base: "border-t border-border bg-[#080b12] py-16 md:py-24",
+});
+
+const {
+  eyebrow = "¿Es para mí?",
+  title = "¿Esta estrategia es para ti?",
+  lead = "Este programa NO es para todos, ni pretendemos que lo sea.",
+  yesTitle = "Adelante, esto es para ti",
+  noTitle = "Espera, esto no es para ti",
+  yes = [],
+  no = [],
+  footer = "Si te identificas con la columna izquierda, nuestro equipo te lo confirmará sin rodeos en la llamada.",
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<section class={fitStyles({ class: className })} {...rest}>
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <SectionHeader eyebrow={eyebrow} title={title} lead={lead} />
+    <div class="grid gap-6 lg:grid-cols-2">
+      <div class="rounded-2xl border border-primary/40 bg-[#0b101d] p-8">
+        <div class="flex items-center gap-3">
+          <span class="flex size-11 items-center justify-center rounded-full bg-primary text-black"><IconCheck class="size-6"></IconCheck></span>
+          <h3 class="text-xl font-extrabold text-white">{yesTitle}</h3>
+        </div>
+        <div class="mt-6 space-y-5">
+          {
+            yes.map((item) => (
+              <div class="flex items-start gap-3 text-sm leading-relaxed text-slate-300">
+                <IconCheck class="mt-0.5 size-5 shrink-0 text-primary"></IconCheck>
+                <p>
+                  {item.text}
+                  {item.strong !== "" && item.strong && <strong class="font-semibold text-white">{item.strong}</strong>}
+                  {item.post}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <div class="rounded-2xl border border-red-500/40 bg-[#120b0b] p-8">
+        <div class="flex items-center gap-3">
+          <span class="flex size-11 items-center justify-center rounded-full bg-red-500/15 text-red-400"><IconX class="size-6"></IconX></span>
+          <h3 class="text-xl font-extrabold text-white">{noTitle}</h3>
+        </div>
+        <div class="mt-6 space-y-5">
+          {
+            no.map((item) => (
+              <div class="flex items-start gap-3 text-sm leading-relaxed text-slate-400">
+                <IconX class="mt-0.5 size-5 shrink-0 text-red-400/80"></IconX>
+                <p>{item}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+    {footer !== "" && (
+      <p class="mt-10 text-center text-sm text-slate-500">
+        {footer}{" "}
+        <strong class="font-semibold text-slate-300">Sin presión, sin compromiso.</strong>
+      </p>
+    )}
+  </div>
+</section>

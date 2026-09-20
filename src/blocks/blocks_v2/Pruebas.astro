@@ -1,0 +1,41 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { tv } from "tailwind-variants";
+
+interface Props extends HTMLAttributes<"div"> {
+  /** Heading label, e.g. "LAS PRUEBAS NO MIENTEN" */
+  title?: string;
+  /** Subtitle on the right, e.g. "Gente real, rentas reales" */
+  subtitle?: string;
+  /** Image URLs shown in the grid */
+  images?: string[];
+  /** Extra wrapper classes (e.g. mt-10 spacing) */
+  tablet?: string;
+}
+
+const proofsStyles = tv({
+  base: "rounded-2xl border border-border bg-[#0a0f1a] p-6",
+});
+
+const {
+  title = "LAS PRUEBAS NO MIENTEN",
+  subtitle = "Gente real, rentas reales",
+  images = [],
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<div class={proofsStyles({ class: className })} {...rest}>
+  <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
+    <p class="text-sm font-bold tracking-wider text-slate-300 uppercase">{title}</p>
+    {subtitle !== "" && <p class="text-xs text-slate-500">{subtitle}</p>}
+  </div>
+  <div class="grid grid-cols-2 gap-3 md:grid-cols-4">
+    {
+      images.map((src) => (
+        <img src={src} alt={title} class="aspect-square w-full rounded-xl border border-border object-cover transition duration-300 hover:opacity-90" loading="lazy" />
+      ))
+    }
+  </div>
+</div>

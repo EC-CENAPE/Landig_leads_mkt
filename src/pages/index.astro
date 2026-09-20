@@ -1,41 +1,305 @@
 ---
-import Layout from "@/components/starwind/Layout.astro";
-import Hero from "@/blocks/Hero.astro";
-import Diferencia from "@/blocks/Diferencia.astro";
-import Residencias from "@/blocks/Residencias.astro";
-import Llegada from "@/blocks/Llegada.astro";
-import Orientacion from "@/blocks/Orientacion.astro";
-import Padres from "@/blocks/Padres.astro";
-import Reserva from "@/blocks/Reserva.astro";
-import Cierre from "@/blocks/Cierre.astro";
+import Layout from "@/components/starwind/Layout.astro"
 
-import Navbar, { type NavLink } from "@/blocks/Navbar.astro";
-import Footer from "@/blocks/Footer.astro";
-import { Button } from "@/components/starwind/button";
+import "@/blocks/blocks_v2/landing.css"
 
-const links: NavLink[] = [
-  { label: "Qué nos diferencia", href: "#diferencia" },
-  { label: "Residencias", href: "#residencias" },
-  { label: "Orientación", href: "#orientacion" },
-  { label: "Agenda tu sesión", href: "#reserva" },
-];
+import Booking from "@/blocks/blocks_v2/Booking.astro"
+import Filtro from "@/blocks/blocks_v2/Filtro.astro"
+import Footer from "@/blocks/blocks_v2/Footer.astro"
+import Header from "@/blocks/blocks_v2/Header.astro"
+import Hero from "@/blocks/blocks_v2/Hero.astro"
+import Metodologia from "@/blocks/blocks_v2/Metodologia.astro"
+import Pruebas from "@/blocks/blocks_v2/Pruebas.astro"
+import Propiedades from "@/blocks/blocks_v2/Propiedades.astro"
+import Software from "@/blocks/blocks_v2/Software.astro"
+import Stats from "@/blocks/blocks_v2/Stats.astro"
+import Testimonios from "@/blocks/blocks_v2/Testimonios.astro"
+import Ticker from "@/blocks/blocks_v2/Ticker.astro"
+
+import IconCap from "@tabler/icons/outline/cap-straight.svg"
+import IconPlane from "@tabler/icons/outline/plane-departure.svg"
+import IconBuildings from "@tabler/icons/outline/buildings.svg"
+import IconUsersGroup from "@tabler/icons/outline/users-group.svg"
+import IconShieldCheck from "@tabler/icons/outline/shield-check.svg"
+
+const ticker = [
+  "Orientación universitaria",
+  "Acompañamiento en Argentina",
+  "Residencias CENAPE",
+  "Una comunidad de estudiantes",
+  "Sesión de Orientación Personalizada",
+  "Estudia. Vive. Conecta. Crece.",
+]
+
+const stats = [
+  { value: "10", label: "temas para resolver en tu orientación", lime: true },
+  { value: "45 min", label: "de sesión personalizada contigo", lime: false },
+  { value: "100%", label: "acompañamiento durante tu llegada", lime: true },
+  { value: "1 a 1", label: "conversación con nuestro equipo", lime: false },
+]
+
+const pillars = [
+  {
+    icon: IconCap,
+    title: "Orientación universitaria",
+    desc: "Analizamos tu perfil y te explicamos tus opciones académicas en Argentina para que tomes la mejor decisión para tu proyecto.",
+    cta: "Define tu futuro académico",
+  },
+  {
+    icon: IconPlane,
+    title: "Acompañamiento en Argentina",
+    desc: "Te orientamos en tu llegada, tu adaptación y tu nueva vida en el país, con un equipo de apoyo real detrás.",
+    cta: "No llegas solo",
+  },
+  {
+    icon: IconBuildings,
+    title: "Residencias CENAPE",
+    desc: "Contamos con nuestras propias residencias estudiantiles de alto nivel, pensadas exclusivamente para nuestra comunidad.",
+    cta: "Vive en comunidad",
+  },
+  {
+    icon: IconUsersGroup,
+    title: "Una comunidad de estudiantes",
+    desc: "Vivirás junto a otros estudiantes CENAPE, creando vínculos y experiencias desde el primer día.",
+    cta: "Comparte tu experiencia",
+  },
+  {
+    icon: IconShieldCheck,
+    title: "Un entorno seleccionado",
+    desc: "Nuestros espacios no están abiertos a cualquier persona: son un entorno pensado solo para estudiantes de la comunidad.",
+    cta: "Un espacio exclusivo",
+  },
+]
+
+const chips = [
+  "Vivir.",
+  "Estudiar.",
+  "Compartir.",
+  "Crecer.",
+]
+
+const journeySteps = [
+  { n: "01", title: "Agenda tu Sesión de Orientación Personalizada", desc: "En tu orientación definimos juntos tu perfil, tus opciones académicas y el plan que mejor se adapta a tu proyecto." },
+  { n: "02", title: "Prepara tu llegada a Argentina", desc: "Te guiamos con el proceso de admisión, visa, documentación, residencia y todo lo necesario para llegar tranquilo." },
+  { n: "03", title: "Llega e instálate con CENAPE", desc: "Te recibimos en una residencia CENAPE, conoces a tu comunidad y comienzas tu nueva vida en Argentina." },
+]
+
+const residencias = [
+  { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCjfhEZfFZO3w-CLy2TcpWUJqg_rNtJ92Demyy2AUaESPR1Mq-ujhYgKy7o-dvl_oL3UjBW4DG787ZVaV-rLq-q8o0jyyeOrkB0sRN-W3d_SzgaCidCcJxni_pqNvPl-kDq6XGw3AabQmO-hdztaQVnjcgr1oI9QV6oStFBXSwfQO1y__0ZVSr95SHIyYz0Nh4PNEsyeFd5Dd1wCLU63EwcjCHhGDEPIkNro8SkPUffvzAcPRcqjyA_", price: "$450 /mes", city: "Buenos Aires", flow: "Servicios + Wifi", down: "Sin adhesión", specs: "Habitación privada • Cocina compartida • Zona de estudio • Seguridad 24/7" },
+  { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDe2Hhc3SxgH-_XO1Pe_FU0ZECud8R-0Y9lq_oPfxLyrk0X5-kP2hpdD8GdIcaDKGWwFYOdgqcvSIW1NtnXh31acFJWTpche3825de9sEdt9NA9CZ5LTJ88VG9v8GwBJ5H_aWJ5ev9kXSprHclyzs_UguIlkFDx2E_yqhdrdVNyu7ZY9rEPV8Bqh5yFABjkF1eShpQpjWeVnGFOaqUypjsruTze0E_KuHsA5w4C1Pbn2Vr1n_XzOWJc", price: "$420 /mes", city: "Córdoba", flow: "Servicios + Wifi", down: "Sin adhesión", specs: "Habitación privada • Sala común • Lavandería • A pasos del campus" },
+  { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBAySVeW_ofLdwa4zgYnoXyDDfPF_mD-U3ZWruCM56ZcgiJ7dbPR2H-o_PmahtcoD7uxc4uTtQoJXDJgiW2-BqESWmZUxGxXiPmJjQI93X3o5w2ob3RXOOif6pDqwYapwXwU3-XzQH0E9nnp9tH4vWJnr3VJ_uPOOggi0QV5vjkvL9bjznbyMLuBaA56zToBkIPzv_DXeBQZVFGVJr6MQK3JOf6UGi5G6fMtfejnQpD10gT0UaljOGD", price: "$430 /mes", city: "Mendoza", flow: "Servicios + Wifi", down: "Sin adhesión", specs: "Habitación privada • Terraza comunitaria • Traslados • Administración CENAPE" },
+  { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAHkNVS3Wa1lrlxbv53zhPt8Ce4nAvu5nHzrR2F7Yy7nJo-E3szbdi04-xXGGwgo27cLA2AafSsRLjCVAPY3UUKKUM-GgvLoOsVX5iT1FbegzgNC0o5m2vkq__C7AFn2s6VINrfNctuFt8ZsLkP0axbXe63Cc16gJXUUPzj2eCqm7t2EkFDRb4WwZoNkDip34c7KBqKqiRlcROZIjk33k8X5gkFXwK35RVx4PBVtWVFnN3xEna-RU6o", price: "$440 /mes", city: "Rosario", flow: "Servicios + Wifi", down: "Sin adhesión", specs: "Habitación privada • Zona de estudio • Gimnasio • Seguridad 24/7" },
+  { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDtEvZ911mTX0P0qav1FGzlp2RTVc88oCVbP3r1rAp464KwR80kXYXO1oCRl05TUjK9SIs3ltEg2M8BwQ9wnRRLRlyLod6NgJ4bjLQhPHrcQ0EyYrqu3Ecxays5FpHUSHmRkUINCE1WEnVAtLmQL4FfT3eGiZvWfzobnQlTcfzqMrfrECNitG4NgG0I2AR4pBSx4Q2j7DBfd0brBL-77JbOWipr55EGgyIx8yJELyQnndLLzfw4kOlk", price: "$410 /mes", city: "La Plata", flow: "Servicios + Wifi", down: "Sin adhesión", specs: "Habitación privada • Biblioteca común • Cocina equipada • A pasos del centro" },
+  { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCNSyFG7p-gUNfduRUM91AvqjaSlfH-3j7ze0z_vxPxAjTqIjtfQKhb7aULUIGafxszdyWySkVW7fraBqoac7IvjiLqDei2dagDqXYBRHZGNRNrjSbe42UJAF-NjWNb_SjYwXRea-gG39tj3wlBxGBPqBKGpRsuaFCaemmUpCU63DGcPFrdEaQgVLISQQZDX-Y2dwhpx-tSy73JttpzE9iCXy_DDiBa0CDtFPfVDwIDLh_OjLuuQCyV", price: "$460 /mes", city: "Bariloche", flow: "Servicios + Wifi", down: "Sin adhesión", specs: "Habitación privada • Vistas a los lagos • Traslados • Comunidad internacional" },
+]
+
+const testimonials = [
+  { initials: "VR", tone: "bg-primary/20 text-primary", name: "Valentina R.", tag: "Estudiante de Diseño • Buenos Aires", quote: "Mi familia y yo tuvimos nuestra sesión de orientación y salimos con todo claro. Llegué a Argentina y CENAPE ya tenía todo listo: residencia, trámites y comunidad." },
+  { initials: "DP", tone: "bg-purple-500/20 text-purple-400", name: "Damián P.", tag: "Ingeniería • Córdoba", quote: "Lo mejor es que llegué sintiendo que ya tenía una comunidad. Ninguna duda quedó sin respuesta y nunca me sentí solo en el proceso." },
+  { initials: "RF", tone: "bg-emerald-500/20 text-emerald-400", name: "Raúl F.", tag: "Padre de estudiante", quote: "Como papá, valoro que nos incluyeran en la decisión. Hablamos de costos, residencia y seguridad con total transparencia antes de comprometernos." },
+]
+
+const proofs = [
+  "https://lh3.googleusercontent.com/aida-public/AB6AXuBLvmQKpSOnUKSPbp9Hx69F57-_Z9-OfH9ZAxoUKO1ofGgVHj5SglYvEFM4FNqnRi4DNdzb2T6taNgAf8DekAIpyA9C2kaUt_dMAbXyhMwstK20lY6ropM1kiSgkj6mNRWXEXEx2fLLAuQ08q6nzKVVSNFFPk4Ki8W0WSg-mE44eGrQoRNXLtSvGWX0iaekZlfPV5hGq5nbOSzWXptYhM-WR5M9ynYHb-eP7m0tvu85VdWF9E50PRi7",
+  "https://lh3.googleusercontent.com/aida-public/AB6AXuAQY5KGz80pAg4RFfijJ3Dv6uN7Q3Bh8UiiTzpQxsTf4cY6qEp8lhKLb7c7KY5E5k_1sMh6_aIqB404RKYrmhtO7XQ_8ZQvKMerMRYWyz0kzi_NYaTMbcC2qcTC_blH4x_LtK2nPSZ-WYmD8_7wn2oM_YNKmfpoOfBd_gNKHz4tTWNlhEAmuU8PmqgilGZfw2ijbZ8eY6svY9x6FNrTr6-fIs3ikDz3CiaiQkWUEfTL4XR4AQanpdjj",
+  "https://lh3.googleusercontent.com/aida-public/AB6AXuD7dyBXPgFHKxs1D2ZdEhMDdGw8iRfDPvTxhHrXCP_neEpW1lakWrK1oOTmWb3nkTV0XSTzdUJqzglFxgFaeV5ldlkm_AWmlYcNzYtYpGJE6x3FcyxqmTmA7oh-z_SwrM93tH1_dd2tAOPkAKIP4AIzQxswJ2Go139OIHfTEWaNxPbNEhnfPPI2qklAIQk3B7Nf0CuB3zn8sWHNBMKLCnaWIMKfPMgOwByHbfSHkgcCsF3R5wkdGZAx",
+  "https://lh3.googleusercontent.com/aida-public/AB6AXuA3rW1RJySFVDOKD0n0y7VpIRydSMcwa_ENdAEWQYkZrLAfT-e-KhaD58xe89O2o74d7vq8voj8NRnxVQbu2iBsj73YH-6AF45ArwmL0gtQ8dtmndLy9ejNyrKeXNzDXeVyJiIywib-ZGL6IQkitStBa8aa1BXHDhAyB7PjanTdn_Zm6RophBxyySI0hYfc6VH7oRAmhwQkfvKzDfVSpR5nK8fxkzNxvpbs1NzHHSfj5wVCS7XCzH4t",
+]
+
+const fitYes = [
+  { text: "Tienes el objetivo de ", strong: "estudiar en Argentina", post: " y quieres un proceso acompañado de principio a fin." },
+  { text: "Buscas llegar con ", strong: "residencia y comunidad", post: " desde el primer día, no solo con una matrícula universitaria." },
+  { text: "Prefieres ", strong: "resolver tus dudas", post: " en una sesión personalizada antes de tomar una decisión." },
+  { text: "Tu ", strong: "familia participa en la decisión", post: " y también quiere entender el proyecto." },
+]
+
+const fitNo = [
+  "No estás interesado en estudiar en el extranjero por ahora.",
+  "Buscas una propuesta de turismo o alquiler de corta estancia, no una residencia estudiantil.",
+  "Esperas respuestas sin proceso ni acompañamiento, solo resultados inmediatos.",
+  "Estás mirando por curiosidad, sin intención real de comenzar tus estudios en Argentina.",
+]
+
+const orientationTopics = [
+  "Analizar tu perfil y tu proyecto académico",
+  "Tus opciones de carrera y universidades en Argentina",
+  "El proceso de admisión y los requisitos de visa",
+  "Cómo funcionan las residencias CENAPE",
+  "La vida estudiantil y las actividades de la comunidad",
+  "Trámites, costos y cómo será tu llegada al país",
+  "Las alternativas de financiamiento y becas",
+  "Cómo te acompañamos durante tus estudios",
+  "Las oportunidades de desarrollo profesional en Argentina",
+  "Cualquier otra duda que tengas sobre tu experiencia",
+]
+
+const days = [
+  { d: "LUN", n: "21", on: false },
+  { d: "MAR", n: "22", on: true },
+  { d: "MIÉ", n: "23", on: false },
+  { d: "JUE", n: "24", on: false },
+  { d: "VIE", n: "25", on: false },
+]
+
+const slots = ["10:00 AM", "11:30 AM", "02:00 PM", "03:30 PM", "05:00 PM", "06:30 PM"]
 ---
-<Layout>
-  <Navbar links={links} ctaText="Agenda una cita" ctaHref="#agenda" />
-  <main class="overflow-hidden">
-    <Hero />
-    <Diferencia />
-    <Residencias />
-    <Llegada />
-    <Orientacion />
-    <Padres />
-    <Reserva />
-    <Cierre />
+
+<Layout
+  title="CENAPE Argentina | Agenda tu Sesión de Orientación Personalizada"
+  bodyClass="theme-s8"
+>
+  <meta slot="head" name="description" content="Gracias por registrarte en CENAPE. Conócete como estudiante, descubre tus opciones académicas en Argentina y agenda tu Sesión de Orientación Personalizada." />
+  <meta slot="head" name="theme-color" content="#07090e" />
+  <link slot="head" rel="preconnect" href="https://fonts.googleapis.com" />
+  <link slot="head" rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link slot="head" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <Ticker phrases={ticker} />
+
+  <Header
+    brandName="CENAPE"
+    brandAccent="ARGENTINA"
+    brandMark="CE"
+    tag="REGISTRO CONFIRMADO"
+    ctaText="Agenda tu orientación"
+    ctaHref="#agendar"
+  />
+
+  <main>
+    <Hero
+      id="top"
+      badge="¡TU REGISTRO ESTÁ CONFIRMADO!"
+      titleStart="Agenda tu "
+      money="Sesión de Orientación"
+      titleMiddle=" "
+      range="Personalizada"
+      titleEnd=" y da tu primer paso hacia "
+      gradientText="estudiar en Argentina"
+      description="Gracias por registrarte en CENAPE Argentina. Ahora queremos conocerte a fondo: entender tu proyecto académico y explicarte personalmente cómo vamos a acompañarte para que llegues a Argentina, estudies y construyas tu nueva vida."
+      vsl={{
+        title: "Conoce la experiencia CENAPE",
+        duration: "Un vistazo a la comunidad y las residencias",
+        caseBadge: "Estudiantes de toda Latinoamérica",
+      }}
+      ctaText="Quiero agendar mi orientación"
+      ctaHref="#agendar"
+      guarantee=""
+      proofPrefix=""
+    />
+
+    <Stats stats={stats} />
+
+    <Metodologia
+      eyebrow="CENAPE Argentina"
+      title="¿Qué hace diferente a CENAPE?"
+      lead="Estudiar en otro país no debería significar comenzar de cero, solo y sin saber a dónde acudir. CENAPE es una comunidad creada para que estudiar en Argentina sea una experiencia integral: estudios, residencia, acompañamiento y conexión desde el primer día."
+      pillars={pillars}
+      chips={chips}
+    />
+
+    <Software
+      eyebrow="Tu plan integral"
+      title="No solo estudias en Argentina: construyes tu experiencia completa."
+      lead="En CENAPE tu llegada se organiza desde el día uno: opciones académicas, residencia, comunidad y un equipo de personas reales que responden tus dudas."
+      url="cenape.com/mi-experiencia"
+      sectionBadge="TU PLAN DE ACOMPAÑAMIENTO INCLUIDO • CENAPE.com (EN VIVO)"
+      hudBadge="Acompañamiento en vivo"
+      radarTitle="Tu experiencia CENAPE"
+      radarText="Un lugar donde vivir, una comunidad, orientación académica y un equipo de apoyo: todo lo que necesitas para tu llegada a Argentina."
+      legend={["Lo aseguramos", "Te guiamos", "Comunidad"]}
+      trendBadge="LO MÁS IMPORTANTE"
+      trendTitle="Llegar acompañado, no llegar solo"
+      trendDesc="Llegas a un nuevo país, conoces a otros jóvenes y te adaptas con nuestro acompañamiento hasta que Argentina se siente como tu casa."
+      trendNote="Tus primeros meses"
+      trendUp="Con acompañamiento"
+      bars={[34, 38, 36, 42, 40, 46, 44, 52, 48, 58, 64, 78]}
+      steps={journeySteps}
+    />
+
+    <Propiedades
+      eyebrow="Residencias CENAPE"
+      title="Mucho más que un lugar donde vivir"
+      lead="Vivir. Estudiar. Compartir. Crecer. Nuestras residencias son espacios de alto nivel en zonas universitarias, pensados para que la comunidad estudie, conviva y crezca junto."
+      deals={residencias}
+      badgeText="RESIDENCIA CENAPE"
+      flowLabel="Incluye"
+      downLabel="Cuota inicial"
+      ctaLabel="Conocer la residencia"
+      imgAltPrefix="Residencia CENAPE en "
+      footnote="Residencias de referencia ilustrativa. La disponibilidad, los valores y las condiciones de cada residencia se confirman de manera personal en tu Sesión de Orientación."
+    />
+
+    <Testimonios
+      eyebrow="Vivencias CENAPE"
+      title="Cada historia empieza con una conversación"
+      lead="Estudiantes y familias que decidieron acompañados, resolvieron todas sus dudas y hoy viven la experiencia CENAPE en Argentina."
+      testimonials={testimonials}
+    />
+
+    <div class="mx-auto -mt-6 max-w-6xl px-4 pb-16 sm:px-6 md:pb-24">
+      <Pruebas
+        title="CENAPE EN IMÁGENES"
+        subtitle="Residencias y comunidad"
+        images={proofs}
+      />
+    </div>
+
+    <Filtro
+      eyebrow="¿Es para ti?"
+      title="¿La experiencia CENAPE es para ti?"
+      lead="Este proceso no es para todos, ni pretendemos que lo sea."
+      yesTitle="Adelante, esto es para ti"
+      noTitle="Espera, esto no es para ti"
+      yes={fitYes}
+      no={fitNo}
+      footer="Si te identificas con la columna izquierda, nuestro equipo te lo confirmará en tu Sesión de Orientación Personalizada."
+    />
+
+    <Booking
+      id="agendar"
+      eyebrow="Reserva tu lugar"
+      title="Agenda tu Sesión de Orientación Personalizada"
+      lead="Elige el día y la hora que mejor se adapten a ti. Tu registro está confirmado y la sesión es personalizada; solo falta reservar tu lugar en el calendario."
+      listLabel="¿De qué hablaremos en tu orientación?"
+      list={orientationTopics}
+      requirementLabel="¿Tus padres participan en la decisión?"
+      requirement="Ellos también pueden acompañarte durante la Sesión de Orientación Personalizada. Nuestro equipo les resolverá todas sus dudas sobre el proyecto, la residencia y la experiencia en Argentina."
+      callTitle="Sesión de Orientación Personalizada"
+      callMeta="45 min • Google Meet"
+      availabilityBadge="Cupos limitados"
+      brandMark="CE"
+      dateTitle="Selecciona fecha y hora:"
+      monthLabel="Esta semana"
+      days={days}
+      zoneLabel="Horario Argentina (GMT-3)"
+      slotTitle="Horarios disponibles"
+      slots={slots}
+      selectedSlot="02:00 PM"
+      namePh="Nombre completo"
+      emailPh="Correo electrónico"
+      phonePh="WhatsApp (+54, +57, +52...)"
+      capitalLabel="¿Cuándo planeas comenzar tus estudios?"
+      capitalOptions={["Este año", "El próximo año", "Aún lo estoy definiendo"]}
+      submitText="Quiero agendar mi orientación"
+      formNote="Al enviar, nuestro equipo te contactará para confirmar tu orientación. Nunca compartimos tus datos."
+    />
   </main>
-  <Footer />
-  <div class="fixed inset-x-0 bottom-0 z-40 border-t bg-background/95 p-3 shadow-[0_-8px_30px_rgba(3,4,17,.08)] backdrop-blur md:hidden">
-    <Button href="#agenda" variant="primary" size="lg" class="w-full">
-      Quiero agendar mi orientación
-    </Button>
-  </div>
+
+  <Footer
+    brandName="CENAPE"
+    brandAccent="ARGENTINA"
+    brandMark="CE"
+    blurb="Una comunidad creada para estudiantes que quieren estudiar, vivir y crecer en Argentina."
+    badgeText="Agenda tu orientación"
+    contacts={[
+      { type: "mail", label: "Hola@cenape.com.ar", href: "mailto:Hola@cenape.com.ar" },
+      { type: "phone", label: "+54 11 5555-0199", href: "tel:+541155550199" },
+      { type: "calendar", label: "Lun - Vie 9am a 7pm" },
+    ]}
+    legalLabel="Legal"
+    legalLinks={["Términos y condiciones", "Política de privacidad", "Aviso de cookies"]}
+    copyright="© 2026 CENAPE Argentina. Todos los derechos reservados."
+    chatLabel=""
+    legalNote="CENAPE Argentina es una organización independiente de orientación y acompañamiento académico. Este sitio no garantiza la admisión a ninguna universidad, ni becas o resultados académicos específicos. La información presentada es de carácter orientativo y puede variar según cada universidad y el contexto de cada estudiante."
+  />
 </Layout>

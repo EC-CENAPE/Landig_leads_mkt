@@ -1,0 +1,63 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { tv } from "tailwind-variants";
+
+import { Icon } from "astro-icon/components";
+import { Badge } from "@/components/starwind/badge";
+import { Button } from "@/components/starwind/button";
+import IconArrowRight from "@tabler/icons/outline/arrow-right.svg";
+
+interface Props extends HTMLAttributes<"header"> {
+  /** Main brand name line */
+  brandName?: string;
+  /** Brand accent line (rendered in lime) */
+  brandAccent?: string;
+  /** Mark shown in the small brand box when brandName is set */
+  brandMark?: string;
+  /** Program tag chip shown on desktop */
+  tag?: string;
+  /** CTA button text */
+  ctaText?: string;
+  /** CTA button href */
+  ctaHref?: string;
+}
+
+const headerStyles = tv({
+  base: "sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur-md",
+});
+
+const {
+  brandMark = "S8",
+  tag = "MENTORÍA PRIVADA 1 A 1",
+  ctaText = "Agendar Llamada",
+  ctaHref = "#agendar",
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<header class={headerStyles({ class: className })} {...rest}>
+  <div class="mx-auto flex h-20 max-w-6xl items-center justify-between px-4 sm:px-6">
+    <a href="#top" class="group flex items-center gap-3">
+      <Icon name="Logo-blanco" class="text-3xl" />
+    </a>
+    <div class="flex items-center gap-4">
+      <Badge
+        tone="neutral"
+        appearance="outline"
+        size="md"
+        class="hidden border-border bg-secondary px-3.5 py-1.5 text-xs font-semibold md:inline-flex"
+      >
+        <span class="relative flex size-2">
+          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
+          <span class="relative inline-flex size-2 rounded-full bg-primary"></span>
+        </span>
+        {tag}
+      </Badge>
+      <Button as="a" href={ctaHref} variant="primary" size="md" class="shadow-lg shadow-primary/20">
+        {ctaText}
+        <IconArrowRight class="size-4"></IconArrowRight>
+      </Button>
+    </div>
+  </div>
+</header>

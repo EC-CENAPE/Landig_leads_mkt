@@ -1,0 +1,65 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.theme-s8 ::selection {
+  background: #bfff04;
+  color: #000000;
+}
+
+.s8-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #bfff04;
+}
+
+.s8-grad {
+  background: linear-gradient(96deg, #bef264, #a3e635 55%, #65a30d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.s8-glow {
+  box-shadow: 0 0 40px -12px rgba(191, 255, 4, 0.25);
+}
+
+.s8-radial {
+  background: radial-gradient(ellipse at 50% 45%, rgba(191, 255, 4, 0.32), rgba(191, 255, 4, 0.05) 45%, transparent 70%);
+}
+
+.s8-playpulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: rgba(191, 255, 4, 0.35);
+  animation: s8-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes s8-ping {
+  75%,
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+.s8-mq-track {
+  animation: s8-marquee 35s linear infinite;
+}
+
+.s8-mq-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes s8-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}

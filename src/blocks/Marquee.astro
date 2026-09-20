@@ -1,0 +1,117 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { tv } from "tailwind-variants";
+
+/** Logo item data */
+export interface LogoData {
+  /** Logo name for alt text */
+  name: string;
+  /** Logo image source */
+  src: string;
+}
+
+interface Props extends HTMLAttributes<"section"> {
+  /** Section heading */
+  heading?: string;
+  /** Array of logos to display in the marquee */
+  logos?: LogoData[];
+  /** Duration in seconds of one full loop */
+  duration?: number;
+  /** Reverse the animation direction */
+  reverse?: boolean;
+  /** Pause the animation on hover */
+  pauseOnHover?: boolean;
+}
+
+const marqueeStyles = tv({
+  base: "@container w-full overflow-hidden",
+});
+
+const {
+  heading = "",
+  logos = [],
+  duration = 30,
+  reverse = false,
+  pauseOnHover = true,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<section class={marqueeStyles({ class: className })} {...rest}>
+  <div
+    class="w-full overflow-hidden border-y border-border/60 bg-muted py-4"
+    style={`--mq-dur: ${duration}s`}
+    data-reverse={reverse ? "" : undefined}
+    data-pause={pauseOnHover ? "" : undefined}
+  >
+    <div class="mq-track">
+      <div class="mq-group">
+        {
+          logos.map((logo) => (
+            <div class="flex h-10 shrink-0 items-center justify-center opacity-70 px-6 grayscale transition-opacity hover:opacity-100 @xl:h-12 dark:invert">
+              <img
+                src={logo.src}
+                alt={logo.name}
+                class="h-full w-full object-contain"
+                loading="lazy"
+              />
+            </div>
+          ))
+        }
+      </div>
+      <div class="mq-group" aria-hidden="true">
+        {
+          logos.map((logo) => (
+            <div class="flex h-10 shrink-0 items-center justify-center opacity-70 px-6 grayscale transition-opacity hover:opacity-100 @xl:h-12 dark:invert">
+              <img
+                src={logo.src}
+                alt=" "
+                class="h-full w-full object-contain"
+                loading="lazy"
+              />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mq-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    animation: mq-marquee var(--mq-dur) linear infinite;
+  }
+
+  .mq-group {
+    display: flex;
+    align-items: center;
+    width: max-content;
+  }
+
+  [data-reverse] .mq-track {
+    animation-direction: reverse;
+  }
+
+  [data-pause]:hover .mq-track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mq-track {
+      animation: none;
+    }
+  }
+
+  @keyframes mq-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+</style>
