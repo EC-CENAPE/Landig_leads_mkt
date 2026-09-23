@@ -1,6 +1,7 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 import { tv } from "tailwind-variants";
+import { Image } from "astro:assets";
 
 interface Props extends HTMLAttributes<"div"> {
   /** Heading label, e.g. "LAS PRUEBAS NO MIENTEN" */
@@ -34,7 +35,7 @@ const {
   <div class="grid grid-cols-2 gap-3 md:grid-cols-4">
     {
       images.map((src) => (
-        <img src={src} alt={title} class="aspect-square w-full rounded-xl border border-border object-cover transition duration-300 hover:opacity-90" loading="lazy" />
+        <Image src={src} alt={title} class="aspect-square w-full rounded-xl border border-border object-cover transition duration-300 hover:opacity-90" loading="lazy" inferSize={true} />
       ))
     }
   </div>

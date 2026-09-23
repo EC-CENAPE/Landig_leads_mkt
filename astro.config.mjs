@@ -14,5 +14,8 @@ export default defineConfig({
       iconDir: "src/assets/icons",
     })],
 
-   
+   image: {
+    domains: ["astro.build"],
+    remotePatterns: [{ protocol: "https" }],
+  }
 });
