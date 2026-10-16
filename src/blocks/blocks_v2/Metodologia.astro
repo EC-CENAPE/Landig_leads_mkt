@@ -52,7 +52,7 @@ const {
     <div class="grid gap-6 md:grid-cols-3">
       {
         pillars.map((pillar) => (
-          <Card class="group h-full rounded-2xl border-border bg-[#0c111c] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40">
+          <Card class="group h-full rounded-2xl border-border bg-[#000028] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40">
             {pillar.icon && (
               <span class="flex size-14 items-center justify-center rounded-2xl border border-primary/30 bg-primary/10 text-primary transition group-hover:bg-primary/20">
                 <pillar.icon class="size-7"></pillar.icon>
@@ -68,19 +68,6 @@ const {
         ))
       }
     </div>
-    {
-      chips.length > 0 && (
-        <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-          {
-            chips.map((chip) => (
-              <Badge tone="neutral" appearance="outline" size="lg" class="gap-2 border-border bg-secondary px-4 py-2 text-sm">
-                <IconCheck class="size-4 shrink-0 text-primary"></IconCheck>
-                {chip}
-              </Badge>
-            ))
-          }
-        </div>
-      )
-    }
+    
   </div>
 </section>

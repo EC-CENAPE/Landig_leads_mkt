@@ -48,7 +48,7 @@
 }
 
 .dark {
-  --background: #030411;
+  --background: #000033;
   --foreground: #f4f7ff;
   --card: #0f1531;
   --card-foreground: #f4f7ff;
@@ -186,13 +186,13 @@
   font-family: "Inter", "Inter Variable", var(--font-sans);
   color-scheme: dark;
 
-  --background: #07090e;
+  --background: #000033;
   --foreground: #e2e8f0;
   --card: #0b0f19;
   --card-foreground: #e2e8f0;
   --popover: #0b0f19;
   --popover-foreground: #e2e8f0;
-  --primary: #bfff04;
+  --primary: #ee841a;
   --primary-foreground: #000000;
   --primary-accent: #a7df03;
   --secondary: #0c111c;

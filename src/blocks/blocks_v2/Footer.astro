@@ -37,7 +37,7 @@ interface Props extends HTMLAttributes<"footer"> {
 }
 
 const footerStyles = tv({
-  base: "border-t border-border bg-[#05070c]",
+  base: "border-t border-border bg-[#000028]",
 });
 
 const {
@@ -69,7 +69,7 @@ const {
         <p class="text-xs leading-relaxed text-slate-500">{blurb}</p>
         <a
           href="#top"
-          class="mt-1 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-black text-black shadow-lg shadow-primary/20 transition hover:bg-[#a7df03]"
+          class="mt-1 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-black text-black shadow-lg shadow-primary/20 transition hover:bg-primary/80"
         >
           <IconShieldCheck class="size-4" />
           {badgeText}

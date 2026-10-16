@@ -3,7 +3,7 @@ html {
 }
 
 .theme-s8 ::selection {
-  background: #bfff04;
+  background: #ee841a;
   color: #000000;
 }
 
@@ -12,11 +12,11 @@ html {
   font-weight: 800;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #bfff04;
+  color: #ee841a;
 }
 
 .s8-grad {
-  background: linear-gradient(96deg, #bef264, #a3e635 55%, #65a30d);
+  background: linear-gradient(96deg, #f7c57a, #f2a345 55%, #ee841a);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

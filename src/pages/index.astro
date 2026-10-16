@@ -1,7 +1,7 @@
 ---
 import Layout from "@/components/starwind/Layout.astro"
 
-import "@/blocks/blocks_v2/landing.css"
+// import "@/blocks/blocks_v2/landing.css"
 
 import Booking from "@/blocks/blocks_v2/Booking.astro"
 import Filtro from "@/blocks/blocks_v2/Filtro.astro"
@@ -46,40 +46,34 @@ const pillars = [
     cta: "Define tu futuro académico",
   },
   {
-    icon: IconPlane,
-    title: "Acompañamiento en Argentina",
-    desc: "Te orientamos en tu llegada, tu adaptación y tu nueva vida en el país, con un equipo de apoyo real detrás.",
-    cta: "No llegas solo",
-  },
-  {
     icon: IconBuildings,
-    title: "Residencias CENAPE",
-    desc: "Contamos con nuestras propias residencias estudiantiles de alto nivel, pensadas exclusivamente para nuestra comunidad.",
+    title: "Residencias Estudiantiles",
+    desc: "Sabrás dónde vas a vivir antes de viajar. Contamos con residencias propias, seguras y cercanas a la universidad, diseñadas especialmente para nuestra comunidad estudiantil.",
     cta: "Vive en comunidad",
   },
   {
+    icon: IconPlane,
+    title: "Acompañamiento",
+    desc: "No solo gestionamos la universidad Acompañamos al estudiante en el proceso completo: orientación de carrera, documentación, admisión, viaje, llegada e integración con la comunidad.",
+    cta: "No llegas solo",
+  },
+  {
     icon: IconUsersGroup,
-    title: "Una comunidad de estudiantes",
+    title: "Comunidad",
     desc: "Vivirás junto a otros estudiantes CENAPE, creando vínculos y experiencias desde el primer día.",
     cta: "Comparte tu experiencia",
   },
   {
     icon: IconShieldCheck,
-    title: "Un entorno seleccionado",
+    title: "Entorno seleccionado",
     desc: "Nuestros espacios no están abiertos a cualquier persona: son un entorno pensado solo para estudiantes de la comunidad.",
     cta: "Un espacio exclusivo",
   },
 ]
 
-const chips = [
-  "Vivir.",
-  "Estudiar.",
-  "Compartir.",
-  "Crecer.",
-]
 
 const journeySteps = [
-  { n: "01", title: "Agenda tu Sesión de Orientación Personalizada", desc: "En tu orientación definimos juntos tu perfil, tus opciones académicas y el plan que mejor se adapta a tu proyecto." },
+  { n: "01", title: "Agenda tu Sesión de Orientación universitaria", desc: "En tu orientación definimos juntos tu perfil, tus opciones académicas y el plan que mejor se adapta a tu proyecto." },
   { n: "02", title: "Prepara tu llegada a Argentina", desc: "Te guiamos con el proceso de admisión, visa, documentación, residencia y todo lo necesario para llegar tranquilo." },
   { n: "03", title: "Llega e instálate con CENAPE", desc: "Te recibimos en una residencia CENAPE, conoces a tu comunidad y comienzas tu nueva vida en Argentina." },
 ]
@@ -121,16 +115,12 @@ const fitNo = [
 ]
 
 const orientationTopics = [
-  "Analizar tu perfil y tu proyecto académico",
-  "Tus opciones de carrera y universidades en Argentina",
-  "El proceso de admisión y los requisitos de visa",
-  "Cómo funcionan las residencias CENAPE",
-  "La vida estudiantil y las actividades de la comunidad",
-  "Trámites, costos y cómo será tu llegada al país",
-  "Las alternativas de financiamiento y becas",
-  "Cómo te acompañamos durante tus estudios",
-  "Las oportunidades de desarrollo profesional en Argentina",
-  "Cualquier otra duda que tengas sobre tu experiencia",
+  "Conoceremos tus intereses y la carrera que quieres estudiar.",
+  "Te orientaremos sobre las universidades y opciones disponibles en Argentina.",
+  "Revisaremos requisitos, documentación y fechas importantes.",
+  "Te explicaremos el proceso de inscripción y admisión.",
+  "Conocerás las opciones de alojamiento, viaje y acompañamiento de CENAPE.",
+  "Resolveremos tus dudas para que puedas tomar una decisión con claridad.",
 ]
 
 const days = [
@@ -168,14 +158,14 @@ const slots = ["10:00 AM", "11:30 AM", "02:00 PM", "03:30 PM", "05:00 PM", "06:3
   <main>
     <Hero
       id="top"
-      badge="¡TU REGISTRO ESTÁ CONFIRMADO!"
+      badge="¡AGENDA TU ORIENTACION UNIVERSITARIA!"
       titleStart="Agenda tu "
       money="Sesión de Orientación"
       titleMiddle=" "
-      range="Personalizada"
-      titleEnd=" y da tu primer paso hacia "
-      gradientText="estudiar en Argentina"
-      description="Gracias por registrarte en CENAPE Argentina. Ahora queremos conocerte a fondo: entender tu proyecto académico y explicarte personalmente cómo vamos a acompañarte para que llegues a Argentina, estudies y construyas tu nueva vida."
+      range="universitaria"
+      titleEnd=" y da tu primer paso para"
+      gradientText=" estudiar en Argentina"
+      description="Te guiamos personalmente 1 a 1 durante todo el proceso: elección de carrera, universidad, trámites, viaje, alojamiento y llegada a Argentina. Y no paramos hasta verte listo para comenzar tus estudios. Desde Argentina , con acompañamiento en cada paso y el respaldo de nuestra comunidad."
       vsl={{
         title: "Conoce la experiencia CENAPE",
         duration: "Un vistazo a la comunidad y las residencias",
@@ -192,12 +182,11 @@ const slots = ["10:00 AM", "11:30 AM", "02:00 PM", "03:30 PM", "05:00 PM", "06:3
     <Metodologia
       eyebrow="CENAPE Argentina"
       title="¿Qué hace diferente a CENAPE?"
-      lead="Estudiar en otro país no debería significar comenzar de cero, solo y sin saber a dónde acudir. CENAPE es una comunidad creada para que estudiar en Argentina sea una experiencia integral: estudios, residencia, acompañamiento y conexión desde el primer día."
+      lead="Estudiar en otro país no debería significar comenzar de cero, solo y sin saber a dónde acudir. CENAPE es una experiencia integral: Universidad + vivienda + comunidad + acompañamiento "
       pillars={pillars}
-      chips={chips}
     />
 
-    <Software
+    <!-- <Software
       eyebrow="Tu plan integral"
       title="No solo estudias en Argentina: construyes tu experiencia completa."
       lead="En CENAPE tu llegada se organiza desde el día uno: opciones académicas, residencia, comunidad y un equipo de personas reales que responden tus dudas."
@@ -214,7 +203,7 @@ const slots = ["10:00 AM", "11:30 AM", "02:00 PM", "03:30 PM", "05:00 PM", "06:3
       trendUp="Con acompañamiento"
       bars={[34, 38, 36, 42, 40, 46, 44, 52, 48, 58, 64, 78]}
       steps={journeySteps}
-    />
+    /> -->
 
     <Propiedades
       eyebrow="Residencias CENAPE"
@@ -244,7 +233,7 @@ const slots = ["10:00 AM", "11:30 AM", "02:00 PM", "03:30 PM", "05:00 PM", "06:3
       />
     </div>
 
-    <Filtro
+    <!-- <Filtro
       eyebrow="¿Es para ti?"
       title="¿La experiencia CENAPE es para ti?"
       lead="Este proceso no es para todos, ni pretendemos que lo sea."
@@ -253,35 +242,21 @@ const slots = ["10:00 AM", "11:30 AM", "02:00 PM", "03:30 PM", "05:00 PM", "06:3
       yes={fitYes}
       no={fitNo}
       footer="Si te identificas con la columna izquierda, nuestro equipo te lo confirmará en tu Sesión de Orientación Personalizada."
-    />
+    /> -->
 
     <Booking
       id="agendar"
       eyebrow="Reserva tu lugar"
-      title="Agenda tu Sesión de Orientación Personalizada"
-      lead="Elige el día y la hora que mejor se adapten a ti. Tu registro está confirmado y la sesión es personalizada; solo falta reservar tu lugar en el calendario."
-      listLabel="¿De qué hablaremos en tu orientación?"
+      title="Define tu camino para estudiar en Argentina"
+      lead="Una sesión de orientación personalizada para conocer tu carrera, universidad y plan de viaje."
+      listLabel="¿Qué veremos en la sesión?"
       list={orientationTopics}
-      requirementLabel="¿Tus padres participan en la decisión?"
-      requirement="Ellos también pueden acompañarte durante la Sesión de Orientación Personalizada. Nuestro equipo les resolverá todas sus dudas sobre el proyecto, la residencia y la experiencia en Argentina."
+      requirementLabel="¿Para quién es esta sesión?"
+      requirement="Para estudiantes que quieren estudiar en Argentina y necesitan orientación para dar el siguiente paso. También pueden participar padres, madres o representantes que quieran conocer el programa y resolver sus dudas."
       callTitle="Sesión de Orientación Personalizada"
       callMeta="45 min • Google Meet"
       availabilityBadge="Cupos limitados"
       brandMark="CE"
-      dateTitle="Selecciona fecha y hora:"
-      monthLabel="Esta semana"
-      days={days}
-      zoneLabel="Horario Argentina (GMT-3)"
-      slotTitle="Horarios disponibles"
-      slots={slots}
-      selectedSlot="02:00 PM"
-      namePh="Nombre completo"
-      emailPh="Correo electrónico"
-      phonePh="WhatsApp (+54, +57, +52...)"
-      capitalLabel="¿Cuándo planeas comenzar tus estudios?"
-      capitalOptions={["Este año", "El próximo año", "Aún lo estoy definiendo"]}
-      submitText="Quiero agendar mi orientación"
-      formNote="Al enviar, nuestro equipo te contactará para confirmar tu orientación. Nunca compartimos tus datos."
     />
   </main>
 
@@ -293,7 +268,7 @@ const slots = ["10:00 AM", "11:30 AM", "02:00 PM", "03:30 PM", "05:00 PM", "06:3
     badgeText="Agenda tu orientación"
     contacts={[
       { type: "mail", label: "Hola@cenape.com.ar", href: "mailto:Hola@cenape.com.ar" },
-      { type: "phone", label: "+54 11 5555-0199", href: "tel:+541155550199" },
+      { type: "phone", label: "+593981539342", href: "https://wa.link/1soob8" },
       { type: "calendar", label: "Lun - Vie 9am a 7pm" },
     ]}
     legalLabel="Legal"
