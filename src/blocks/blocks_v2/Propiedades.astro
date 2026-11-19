@@ -4,24 +4,32 @@ import { tv } from "tailwind-variants";
 
 import { Badge } from "@/components/starwind/badge";
 import { Card } from "@/components/starwind/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/starwind/carousel";
+import { Video } from "@/components/starwind/video";
 import IconArrowRight from "@tabler/icons/outline/arrow-right.svg";
 
 import SectionHeader from "./SectionHeader.astro";
 
 /** Real estate listing card content */
 export interface Deal {
-  /** Property image URL */
-  img: string;
-  /** Price, e.g. "$92,000" */
-  price: string;
-  /** City and state, e.g. "Cleveland, OH" */
-  city: string;
-  /** Net monthly flow, e.g. "+$490 USD" */
-  flow: string;
-  /** Approximate down payment, e.g. "$18,400" */
-  down: string;
-  /** Specs line: beds, baths, rent, sqft */
-  specs: string;
+  /** Property name or address, e.g. "Virrey Liniers y Don Bosco" */
+  name: string;
+  /** Room types available, e.g. "Individuales y dobles" */
+  rooms?: string;
+  /** Services included in the stay */
+  includes: string[];
+  /** Extra note, e.g. "Edificio de 11 pisos" */
+  note?: string;
+  /** Gallery image URLs */
+  images: string[];
+  /** Optional video URLs, rendered as extra carousel slides */
+  videos?: string[];
 }
 
 interface Props extends HTMLAttributes<"section"> {
@@ -32,13 +40,13 @@ interface Props extends HTMLAttributes<"section"> {
   footnote?: string;
   /** Badge on each card image corner */
   badgeText?: string;
-  /** First metric label (left cell) */
-  flowLabel?: string;
-  /** Second metric label (right cell) */
-  downLabel?: string;
+  /** Included services label */
+  includesLabel?: string;
+  /** Room types label */
+  roomsLabel?: string;
   /** Card footer CTA label */
   ctaLabel?: string;
-  /** Prefix for the image alt text */
+  /** Prefix for the media alt text */
   imgAltPrefix?: string;
 }
 
@@ -51,15 +59,30 @@ const {
   title = "Casas rentables disponibles en el programa",
   lead = "Un vistazo al tipo de propiedades que analizamos con S8Tracker antes de recomendarte la compra. Cada caso se procesa y se negocia de manera individual.",
   deals = [],
-  footnote = "Flujos calculados de forma conservadora y proyectados para los próximos 12 meses. Precios en USD, al momento de publicación.",
+  footnote = "La disponibilidad, los servicios y las condiciones de cada residencia se confirman de manera personal en tu Sesión de Orientación.",
   badgeText = "EN VENTA",
-  flowLabel = "Flujo neto/mes",
-  downLabel = "Enganche aprox.",
+  includesLabel = "Incluye",
+  roomsLabel = "Habitaciones",
   ctaLabel = "Ver desglose y retorno",
   imgAltPrefix = "Casa en ",
   class: className,
   ...rest
 } = Astro.props;
+
+const cards = deals.map((deal) => {
+  const slides = deal.images.length + (deal.videos?.length ?? 0);
+  const mediaParts: string[] = [];
+
+  if (deal.images.length > 0) {
+    mediaParts.push(`${deal.images.length} ${deal.images.length === 1 ? "foto" : "fotos"}`);
+  }
+
+  if (deal.videos && deal.videos.length > 0) {
+    mediaParts.push(`${deal.videos.length} ${deal.videos.length === 1 ? "video" : "videos"}`);
+  }
+
+  return { ...deal, slides, mediaLabel: mediaParts.join(" · ") };
+});
 ---
 
 <section class={propertiesStyles({ class: className })} {...rest}>
@@ -67,41 +90,179 @@ const {
     <SectionHeader eyebrow={eyebrow} title={title} lead={lead} />
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {
-        deals.map((deal) => (
-          <a href="#agendar" class="group block">
-            <Card class="overflow-hidden rounded-2xl border-border bg-[#000028] transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 pt-0">
-              <div class="relative overflow-hidden">
-                <img src={deal.img} alt={`${imgAltPrefix}${deal.city}`} class="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-                <Badge tone="primary" appearance="solid" size="sm" class="absolute top-3 right-3 py-1 text-[10px] font-black tracking-wider shadow-lg">
-                  {badgeText}
-                </Badge>
+        cards.map((deal) => (
+          <Card class="overflow-hidden rounded-2xl border-border bg-[#000028] pt-0 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40">
+            <div class="relative">
+              <Carousel
+                autoInit={false}
+                opts={{ align: "start", loop: true }}
+                data-autoplay-carousel
+              >
+                <CarouselContent>
+                  {deal.images.map((src, index) => (
+                    <CarouselItem>
+                      <img
+                        src={src}
+                        alt={`${imgAltPrefix}${deal.name} — foto ${index + 1}`}
+                        class="aspect-[4/5] w-full object-cover"
+                        loading={index === 0 ? "eager" : "lazy"}
+                        decoding="async"
+                        draggable="false"
+                      />
+                    </CarouselItem>
+                  ))}
+                  {deal.videos?.map((src, index) => (
+                    <CarouselItem>
+                      <div class="relative aspect-[4/5] w-full bg-black">
+                        <Video
+                          src={src}
+                          title={`${imgAltPrefix}${deal.name} — video ${index + 1}`}
+                          class="absolute inset-0 h-full w-full object-contain"
+                          controls
+                          muted
+                          preload="metadata"
+                          playsinline
+                        />
+                        <Badge
+                          tone="primary"
+                          appearance="solid"
+                          size="sm"
+                          class="pointer-events-none absolute top-3 left-3 z-10 py-1 text-[10px] font-black tracking-wider shadow-lg"
+                        >
+                          VIDEO
+                        </Badge>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                {deal.slides > 1 && (
+                  <>
+                    <CarouselPrevious
+                      variant="ghost"
+                      aria-label="Medio anterior"
+                      class="left-2! top-1/2! size-9 bg-black/50 text-white shadow-lg backdrop-blur-sm hover:bg-black/70 hover:text-white"
+                    />
+                    <CarouselNext
+                      variant="ghost"
+                      aria-label="Medio siguiente"
+                      class="right-2! top-1/2! size-9 bg-black/50 text-white shadow-lg backdrop-blur-sm hover:bg-black/70 hover:text-white"
+                    />
+                  </>
+                )}
+              </Carousel>
+              <Badge
+                tone="primary"
+                appearance="solid"
+                size="sm"
+                class="pointer-events-none absolute top-3 right-3 z-10 py-1 text-[10px] font-black tracking-wider shadow-lg"
+              >
+                {badgeText}
+              </Badge>
+              {deal.mediaLabel !== "" && (
+                <span class="pointer-events-none absolute bottom-3 left-3 z-10 rounded-full bg-black/60 px-2.5 py-1 text-[10px] font-semibold tracking-wide text-white backdrop-blur-sm">
+                  {deal.mediaLabel}
+                </span>
+              )}
+            </div>
+            <div class="flex flex-1 flex-col p-5">
+              <h3 class="text-lg leading-snug font-black text-white">{deal.name}</h3>
+              {deal.note !== undefined && (
+                <p class="mt-1 text-xs font-medium text-slate-400">{deal.note}</p>
+              )}
+              <div class="mt-4 space-y-3">
+                {deal.rooms !== undefined && (
+                  <div>
+                    <p class="text-[10px] font-semibold tracking-wider text-slate-500 uppercase">
+                      {roomsLabel}
+                    </p>
+                    <p class="mt-1 text-sm font-medium text-slate-200">{deal.rooms}</p>
+                  </div>
+                )}
+                {deal.includes.length > 0 && (
+                  <div>
+                    <p class="text-[10px] font-semibold tracking-wider text-slate-500 uppercase">
+                      {includesLabel}
+                    </p>
+                    <div class="mt-1.5 flex flex-wrap gap-1.5">
+                      {deal.includes.map((item) => (
+                        <Badge tone="primary" appearance="soft" size="sm" class="border border-primary/20">
+                          {item}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-              <div class="p-5">
-                <div class="flex items-center justify-between gap-3">
-                  <h3 class="text-2xl font-black text-white">{deal.price}</h3>
-                  <span class="text-sm font-medium text-slate-400">{deal.city}</span>
-                </div>
-                <div class="mt-4 grid grid-cols-2 gap-3 rounded-xl border border-border bg-[#000038] p-3 text-center">
-                  <div>
-                    <p class="text-[10px] font-semibold tracking-wider text-slate-500 uppercase">{flowLabel}</p>
-                    <p class="mt-1 text-lg font-black text-primary">{deal.flow}</p>
-                  </div>
-                  <div>
-                    <p class="text-[10px] font-semibold tracking-wider text-slate-500 uppercase">{downLabel}</p>
-                    <p class="mt-1 text-lg font-black text-white">{deal.down}</p>
-                  </div>
-                </div>
-                <p class="mt-4 text-xs leading-relaxed text-slate-400">{deal.specs}</p>
-                <span class="mt-5 inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-primary/40 py-2.5 text-sm font-semibold text-primary transition group-hover:bg-primary/10">
+              <div class="mt-auto pt-5">
+                <a
+                  href="#agendar"
+                  class="inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-primary/40 py-2.5 text-sm font-semibold text-primary transition hover:bg-primary/10"
+                >
                   {ctaLabel}
                   <IconArrowRight class="size-4"></IconArrowRight>
-                </span>
+                </a>
               </div>
-            </Card>
-          </a>
+            </div>
+          </Card>
         ))
       }
     </div>
     {footnote !== "" && <p class="mt-8 text-center text-xs text-slate-500">{footnote}</p>}
   </div>
 </section>
+
+<script>
+  import Autoplay from "embla-carousel-autoplay";
+
+  import { createCarousel } from "@starwind-ui/astro/carousel";
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  type AutoplayApi = {
+    play: () => void;
+    stop: () => void;
+  };
+
+  function initAutoplayCarousels() {
+    document.querySelectorAll<HTMLElement>("[data-autoplay-carousel]").forEach((root) => {
+      if (root.dataset.carouselReady) return;
+      root.dataset.carouselReady = "true";
+
+      const plugins = reducedMotion
+        ? []
+        : [
+            Autoplay({
+              delay: 4000,
+              playOnInit: true,
+              stopOnInteraction: false,
+              stopOnMouseEnter: true,
+              stopOnFocusIn: true,
+            }),
+          ];
+
+      const carousel = createCarousel(root, { plugins });
+      const autoplay = (carousel.api.plugins() as Record<string, AutoplayApi | undefined>)
+        .autoplay;
+
+      const syncAutoplay = () => {
+        const videoPlaying = Array.from(root.querySelectorAll("video")).some(
+          (video) => !video.paused && !video.ended,
+        );
+
+        if (videoPlaying) autoplay?.stop();
+        else autoplay?.play();
+      };
+
+      root.querySelectorAll("video").forEach((video) => {
+        video.addEventListener("play", syncAutoplay);
+        video.addEventListener("pause", syncAutoplay);
+        video.addEventListener("ended", syncAutoplay);
+      });
+    });
+  }
+
+  initAutoplayCarousels();
+
+  document.addEventListener("astro:after-swap", initAutoplayCarousels);
+  document.addEventListener("starwind:init", initAutoplayCarousels);
+</script>
