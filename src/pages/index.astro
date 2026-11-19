@@ -3,6 +3,7 @@ import { readdirSync } from "node:fs";
 import { join } from "node:path";
 
 import Layout from "@/components/starwind/Layout.astro"
+import { assetUrl } from "@/lib/assets"
 
 // import "@/blocks/blocks_v2/landing.css"
 
@@ -83,8 +84,7 @@ const journeySteps = [
 
 const collator = new Intl.Collator("es", { numeric: true, sensitivity: "base" });
 
-const mediaUrl = (folder: string, file: string) =>
-  `/${encodeURIComponent(folder)}/${encodeURIComponent(file)}`;
+const mediaUrl = (folder: string, file: string) => assetUrl(`${folder}/${file}`);
 
 const photoRank = (file: string) => {
   const match = file.match(/\((\d+)\)/);
